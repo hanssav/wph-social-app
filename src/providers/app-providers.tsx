@@ -12,6 +12,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { toast, Toaster } from 'sonner';
 import { store } from '@/store';
 import { hydrateToken } from '@/store/slices/auth-slice';
+import { ThemeProvider } from './theme-provider';
 
 type Props = {
   children: React.ReactNode;
@@ -55,6 +56,7 @@ const AppProvider = ({ children }: Props) => {
       <QueryClientProvider client={queryClient}>
         {children}
         <Toaster richColors position='top-right' />
+
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ReduxProvider>

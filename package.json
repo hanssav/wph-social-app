@@ -2,6 +2,7 @@
   "name": "wph-social-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -31,14 +32,18 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "^20.19.25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.22",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.6",
-    "tailwindcss": "^4",
+    "postcss": "^8.5.6",
+    "postcss-import": "^16.1.1",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^4.0.0",
     "tw-animate-css": "^1.4.0",
     "typescript": "^5"
   }

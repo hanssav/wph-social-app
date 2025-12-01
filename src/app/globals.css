@@ -1,7 +1,157 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@config '../../tailwind.config.ts';
+
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
+
+/* ==================== SF PRO FROM YOUR GOOGLE DRIVE ==================== /* SF Pro Display */
+/* SF Pro Display */
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-medium-webfont.woff2')
+    format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff2')
+    format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@theme {
+  /* ==================== DISPLAY 3XL (60px) ==================== */
+  --text-display-3xl: 3.75rem; /* 60px */
+  --text-display-3xl--line-height: 4.5rem; /* 72px */
+
+  /* ==================== DISPLAY 2XL (48px) ==================== */
+  --text-display-2xl: 3rem; /* 48px */
+  --text-display-2xl--line-height: 3.75rem; /* 60px */
+  --text-display-2xl--letter-spacing: -0.02em; /* -2% */
+
+  /* ==================== DISPLAY XL (40px) ==================== */
+  --text-display-xl: 2.5rem; /* 40px */
+  --text-display-xl--line-height: 3rem; /* 48px */
+  --text-display-xl--letter-spacing: -0.02em;
+
+  /* ==================== DISPLAY LG (36px) ==================== */
+  --text-display-lg: 2.25rem; /* 36px */
+  --text-display-lg--line-height: 2.75rem; /* 44px */
+  --text-display-lg--letter-spacing: -0.02em;
+
+  /* ==================== DISPLAY MD (32px) ==================== */
+  --text-display-md: 2rem; /* 32px */
+  --text-display-md--line-height: 2.5rem; /* 40px */
+
+  /* ==================== DISPLAY SM (28px) ==================== */
+  --text-display-sm: 1.75rem; /* 28px */
+  --text-display-sm--line-height: 2.375rem; /* 38px */
+
+  /* ==================== DISPLAY XS (24px) ==================== */
+  --text-display-xs: 1.5rem; /* 24px */
+  --text-display-xs--line-height: 2.25rem; /* 36px */
+
+  /* ==================== TEXT XL (20px) ==================== */
+  --text-xl: 1.25rem; /* 20px */
+  --text-xl--line-height: 2.125rem; /* 34px */
+
+  /* ==================== TEXT LG (18px) ==================== */
+  --text-lg: 1.125rem; /* 18px */
+  --text-lg--line-height: 2rem; /* 32px */
+
+  /* ==================== TEXT MD (16px) – Default body ==================== */
+  --text-md: 1rem; /* 16px */
+  --text-md--line-height: 1.875rem; /* 30px */
+
+  /* ==================== TEXT SM (14px) ==================== */
+  --text-sm: 0.875rem; /* 14px */
+  --text-sm--line-height: 1.75rem; /* 28px */
+
+  /* ==================== TEXT XS (12px) ==================== */
+  --text-xs: 0.75rem; /* 12px */
+  --text-xs--line-height: 1.5rem;
+
+  /* ==================== SPACING SCALE (base 16px) ==================== */
+  --spacing-none: 0rem; /* 0px     */
+  --spacing-xxs: 0.125rem; /* 2px     */
+  --spacing-xs: 0.25rem; /* 4px     */
+  --spacing-sm: 0.375rem; /* 6px     */
+  --spacing-md: 0.5rem; /* 8px     */
+  --spacing-lg: 0.75rem; /* 12px    */
+  --spacing-xl: 1rem; /* 16px    ← default gap, p-4, m-4, dll */
+  --spacing-2xl: 1.25rem; /* 20px    */
+  --spacing-3xl: 1.5rem; /* 24px    */
+  --spacing-4xl: 2rem; /* 32px    */
+  --spacing-5xl: 2.5rem; /* 40px    */
+  --spacing-6xl: 3rem; /* 48px    */
+  --spacing-7xl: 4rem; /* 64px    */
+  --spacing-8xl: 5rem; /* 80px    */
+  --spacing-9xl: 6rem; /* 96px    */
+  --spacing-10xl: 8rem; /* 128px   */
+  --spacing-11xl: 8.75rem; /* 140px   */
+
+  /* ==================== BORDER RADIUS SCALE ==================== */
+
+  --radius-none: 0rem; /* 0px     */
+  --radius-xxs: 0.125rem; /* 2px     */
+  --radius-xs: 0.25rem; /* 4px     */
+  --radius-sm: 0.375rem; /* 6px     */
+  --radius-md: 0.5rem; /* 8px     */
+  --radius-lg: 0.625rem; /* 10px    */
+  --radius-xl: 0.75rem; /* 12px    */
+  --radius-2xl: 1rem; /* 16px    */
+  --radius-3xl: 1.25rem; /* 20px    */
+  --radius-4xl: 1.5rem; /* 24px    */
+  --radius-full: 9999px; /* lingkaran sempurna */
+
+  /* ========== NEUTRAL / GRAY ========== */
+  --color-neutral-25: #fdfdfd;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e9eaeb;
+  --color-neutral-300: #d5d7da;
+  --color-neutral-400: #a4a7ae;
+  --color-neutral-500: #717680; /* AA 6.84 */
+  --color-neutral-600: #535862; /* AA 6.55 */
+  --color-neutral-700: #414651; /* AA 5.92 */
+  --color-neutral-800: #252b37; /* AA 4.95 */
+  --color-neutral-900: #181d27;
+  --color-neutral-950: #0a0d12;
+
+  /* ========== PRIMARY ========== */
+  --color-primary-100: #f6f9fe; /* very light */
+  --color-primary-200: #7f51f9; /* AA 6.38 */
+  --color-primary-300: #6936f2; /* main primary – AA 6.38 */
+
+  /* ========== ACCENT ========== */
+  --color-accent-red: #d9206e; /* AA 6.38 */
+  --color-accent-green: #079455; /* AA 6.15 */
+  --color-accent-yellow: #fdb022; /* AA 6.15 */
+
+  /* ========== BASE ========== */
+  --color-white: #ffffff; /* AA 6.38 pada background gelap */
+  --color-black: #000000;
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -113,10 +263,49 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
   body {
-    @apply bg-background text-foreground;
+    @apply font-sans antialiased bg-background text-foreground;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  p,
+  span,
+  div,
+  input,
+  textarea,
+  button,
+  a {
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+@utility flex-between {
+  @apply flex items-center justify-between;
+}
+@utility flex-start {
+  @apply flex items-center justify-start;
+}
+@utility flex-end {
+  @apply flex items-center justify-end;
+}
+
+@utility flex-col-center {
+  @apply flex flex-col items-center justify-center;
+}
+@utility flex-col-start {
+  @apply flex flex-col;
+}
+@utility flex-col-between {
+  @apply flex flex-col justify-between;
 }
