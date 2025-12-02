@@ -6,7 +6,6 @@ import {
   AuthCCard,
 } from '@/components/pages/auth/auth-card';
 import { Button } from '@/components/ui/button';
-import { CardContent } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { registerFields, registerSection } from '@/constants/auth.constants';
 import { useRegister } from '@/hooks/use-register';

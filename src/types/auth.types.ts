@@ -16,18 +16,5 @@ export type AuthPayload = {
   user: User;
 };
 
-export type RegisterRequest = {
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-  password: string;
-};
-
-export type LoginRequest = {
-  email: string;
-  password: string;
-};
-
 // SAME response Register & Login
 export type AuthResponse = ApiSuccess<AuthPayload>;

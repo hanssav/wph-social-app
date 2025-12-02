@@ -1,7 +1,19 @@
+'use client';
+import { FeedCardItem, FeedCards } from '@/components/pages/feed/card';
+import { useInfiniteFeeds } from '@/hooks/use-infinite-feeds';
+
 const FeedPage = () => {
+  const { data } = useInfiniteFeeds();
+
+  const feeds = data?.pages.flatMap((feed) => feed.data?.items);
+
   return (
-    <div className='container-800'>
-      <h1 className='text-display-xl-bold'>Content</h1>
+    <div className='container-600'>
+      <FeedCards>
+        {feeds?.map((feed) => (
+          <FeedCardItem key={feed?.id} post={feed} />
+        ))}
+      </FeedCards>
     </div>
   );
 };

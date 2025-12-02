@@ -3,3 +3,5 @@ export * from './api.types';
 export * from './me.types';
 export * from './form-field.types';
 export * from './base.types';
+export * from './post.types';
+export * from './feed.types';

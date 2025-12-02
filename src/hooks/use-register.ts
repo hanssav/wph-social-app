@@ -1,6 +1,5 @@
-import { RegisterSchema } from '@/schema/auth.schema';
+import { RegisterRequest, RegisterSchema } from '@/schema/auth.schema';
 import { authServices } from '@/services';
-import { RegisterRequest } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -13,6 +12,7 @@ export const useRegister = () => {
       email: '',
       name: '',
       password: '',
+      confirmPassword: '',
       phone: '',
       username: '',
     },

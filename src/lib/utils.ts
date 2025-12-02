@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getImage = (
-  url: string | null,
+  url: string | null | undefined,
   variant: 'cover' | 'avatar' = 'cover'
 ) => {
   const img = variant === 'cover' ? coverImage : avatarImage;
