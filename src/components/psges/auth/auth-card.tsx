@@ -25,8 +25,9 @@ const AuthCCard = ({ children, title }: Props) => {
             <Image
               alt='logo'
               src={IMAGES.LOGO}
-              loading='lazy'
+              loading='eager'
               className='object-cover'
+              sizes='(max-width: 768px) 120px, 137px'
               fill
             />
           </div>
