@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 import './globals.css';
 import AppProvider from '@/providers/app-providers';
 import AuthProvider from '@/providers/auth-provider';
-// import { ThemeProvider } from 'next-themes';
+import { ThemeProvider } from 'next-themes';
 
 export const metadata: Metadata = {
-  title: 'Your App',
+  title: 'Social App',
   description: 'Powered by SF Pro & Next.js',
 };
 
@@ -18,7 +18,16 @@ export default function RootLayout({
     <html lang='en' className='dark' suppressHydrationWarning>
       <body className='antialiased min-h-screen' data-scroll-behavior='smooth'>
         <AppProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <ThemeProvider
+              attribute='class'
+              defaultTheme='dark'
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </AuthProvider>
         </AppProvider>
       </body>
     </html>
