@@ -5,8 +5,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ==================== SF PRO FROM YOUR GOOGLE DRIVE ==================== /* SF Pro Display */
-/* SF Pro Display */
+/* ==================== SF PRO FONTS ==================== */
 @font-face {
   font-family: 'SF Pro Display';
   src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff2')
@@ -40,89 +39,73 @@
 }
 
 @theme {
-  /* ==================== DISPLAY 3XL (60px) ==================== */
-  --text-display-3xl: 3.75rem; /* 60px */
-  --text-display-3xl--line-height: 4.5rem; /* 72px */
+  /* ==================== TYPOGRAPHY SCALE ==================== */
+  --text-display-3xl: 3.75rem;
+  --text-display-3xl--line-height: 4.5rem;
 
-  /* ==================== DISPLAY 2XL (48px) ==================== */
-  --text-display-2xl: 3rem; /* 48px */
-  --text-display-2xl--line-height: 3.75rem; /* 60px */
-  --text-display-2xl--letter-spacing: -0.02em; /* -2% */
+  --text-display-2xl: 3rem;
+  --text-display-2xl--line-height: 3.75rem;
+  --text-display-2xl--letter-spacing: -0.02em;
 
-  /* ==================== DISPLAY XL (40px) ==================== */
-  --text-display-xl: 2.5rem; /* 40px */
-  --text-display-xl--line-height: 3rem; /* 48px */
+  --text-display-xl: 2.5rem;
+  --text-display-xl--line-height: 3rem;
   --text-display-xl--letter-spacing: -0.02em;
 
-  /* ==================== DISPLAY LG (36px) ==================== */
-  --text-display-lg: 2.25rem; /* 36px */
-  --text-display-lg--line-height: 2.75rem; /* 44px */
+  --text-display-lg: 2.25rem;
+  --text-display-lg--line-height: 2.75rem;
   --text-display-lg--letter-spacing: -0.02em;
 
-  /* ==================== DISPLAY MD (32px) ==================== */
-  --text-display-md: 2rem; /* 32px */
-  --text-display-md--line-height: 2.5rem; /* 40px */
+  --text-display-md: 2rem;
+  --text-display-md--line-height: 2.5rem;
 
-  /* ==================== DISPLAY SM (28px) ==================== */
-  --text-display-sm: 1.75rem; /* 28px */
-  --text-display-sm--line-height: 2.375rem; /* 38px */
+  --text-display-sm: 1.75rem;
+  --text-display-sm--line-height: 2.375rem;
 
-  /* ==================== DISPLAY XS (24px) ==================== */
-  --text-display-xs: 1.5rem; /* 24px */
-  --text-display-xs--line-height: 2.25rem; /* 36px */
+  --text-display-xs: 1.5rem;
+  --text-display-xs--line-height: 2.25rem;
 
-  /* ==================== TEXT XL (20px) ==================== */
-  --text-xl: 1.25rem; /* 20px */
-  --text-xl--line-height: 2.125rem; /* 34px */
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 2.125rem;
 
-  /* ==================== TEXT LG (18px) ==================== */
-  --text-lg: 1.125rem; /* 18px */
-  --text-lg--line-height: 2rem; /* 32px */
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 2rem;
 
-  /* ==================== TEXT MD (16px) – Default body ==================== */
-  --text-md: 1rem; /* 16px */
-  --text-md--line-height: 1.875rem; /* 30px */
+  --text-md: 1rem;
+  --text-md--line-height: 1.875rem;
 
-  /* ==================== TEXT SM (14px) ==================== */
-  --text-sm: 0.875rem; /* 14px */
-  --text-sm--line-height: 1.75rem; /* 28px */
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.75rem;
 
-  /* ==================== TEXT XS (12px) ==================== */
-  --text-xs: 0.75rem; /* 12px */
+  --text-xs: 0.75rem;
   --text-xs--line-height: 1.5rem;
 
-  /* ==================== SPACING SCALE (base 16px) ==================== */
-  --spacing-none: 0rem; /* 0px     */
-  --spacing-xxs: 0.125rem; /* 2px     */
-  --spacing-xs: 0.25rem; /* 4px     */
-  --spacing-sm: 0.375rem; /* 6px     */
-  --spacing-md: 0.5rem; /* 8px     */
-  --spacing-lg: 0.75rem; /* 12px    */
-  --spacing-xl: 1rem; /* 16px    ← default gap, p-4, m-4, dll */
-  --spacing-2xl: 1.25rem; /* 20px    */
-  --spacing-3xl: 1.5rem; /* 24px    */
-  --spacing-4xl: 2rem; /* 32px    */
-  --spacing-5xl: 2.5rem; /* 40px    */
-  --spacing-6xl: 3rem; /* 48px    */
-  --spacing-7xl: 4rem; /* 64px    */
-  --spacing-8xl: 5rem; /* 80px    */
-  --spacing-9xl: 6rem; /* 96px    */
-  --spacing-10xl: 8rem; /* 128px   */
-  --spacing-11xl: 8.75rem; /* 140px   */
+  /* ==================== SPACING SCALE ==================== */
+  --spacing-0: 0rem;
+  --spacing-0\.5: 0.125rem; /* 2px */
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-1\.5: 0.375rem; /* 6px */
+  --spacing-2: 0.5rem; /* 8px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem; /* 16px */
+  --spacing-5: 1.25rem; /* 20px */
+  --spacing-6: 1.5rem; /* 24px */
+  --spacing-8: 2rem; /* 32px */
+  --spacing-10: 2.5rem; /* 40px */
+  --spacing-12: 3rem; /* 48px */
+  --spacing-16: 4rem; /* 64px */
+  --spacing-20: 5rem; /* 80px */
+  --spacing-24: 6rem; /* 96px */
+  --spacing-32: 8rem; /* 128px */
 
   /* ==================== BORDER RADIUS SCALE ==================== */
-
-  --radius-none: 0rem; /* 0px     */
-  --radius-xxs: 0.125rem; /* 2px     */
-  --radius-xs: 0.25rem; /* 4px     */
-  --radius-sm: 0.375rem; /* 6px     */
-  --radius-md: 0.5rem; /* 8px     */
-  --radius-lg: 0.625rem; /* 10px    */
-  --radius-xl: 0.75rem; /* 12px    */
-  --radius-2xl: 1rem; /* 16px    */
-  --radius-3xl: 1.25rem; /* 20px    */
-  --radius-4xl: 1.5rem; /* 24px    */
-  --radius-full: 9999px; /* lingkaran sempurna */
+  --radius-none: 0rem;
+  --radius-sm: 0.375rem; /* 6px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.625rem; /* 10px */
+  --radius-xl: 0.75rem; /* 12px */
+  --radius-2xl: 1rem; /* 16px */
+  --radius-3xl: 1.25rem; /* 20px */
+  --radius-full: 9999px;
 
   /* ========== NEUTRAL / GRAY ========== */
   --color-neutral-25: #fdfdfd;
@@ -131,33 +114,32 @@
   --color-neutral-200: #e9eaeb;
   --color-neutral-300: #d5d7da;
   --color-neutral-400: #a4a7ae;
-  --color-neutral-500: #717680; /* AA 6.84 */
-  --color-neutral-600: #535862; /* AA 6.55 */
-  --color-neutral-700: #414651; /* AA 5.92 */
-  --color-neutral-800: #252b37; /* AA 4.95 */
+  --color-neutral-500: #717680;
+  --color-neutral-600: #535862;
+  --color-neutral-700: #414651;
+  --color-neutral-800: #252b37;
   --color-neutral-900: #181d27;
   --color-neutral-950: #0a0d12;
 
   /* ========== PRIMARY ========== */
-  --color-primary-100: #f6f9fe; /* very light */
-  --color-primary-200: #7f51f9; /* AA 6.38 */
-  --color-primary-300: #6936f2; /* main primary – AA 6.38 */
+  --color-primary-100: #f6f9fe;
+  --color-primary-200: #7f51f9;
+  --color-primary-300: #6936f2;
 
   /* ========== ACCENT ========== */
-  --color-accent-red: #d9206e; /* AA 6.38 */
-  --color-accent-green: #079455; /* AA 6.15 */
-  --color-accent-yellow: #fdb022; /* AA 6.15 */
+  --color-accent-red: #d9206e;
+  --color-accent-green: #079455;
+  --color-accent-yellow: #fdb022;
 
   /* ========== BASE ========== */
-  --color-white: #ffffff; /* AA 6.38 pada background gelap */
+  --color-white: #ffffff;
   --color-black: #000000;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -231,40 +213,56 @@
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+
+  --card: oklch(0.18 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+
+  --popover: oklch(0.18 0 0);
   --popover-foreground: oklch(0.985 0 0);
+
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+
+  --secondary: oklch(0.25 0 0); /* #414651 */
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+
+  --muted: oklch(0.25 0 0);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
+
+  --accent: oklch(0.25 0 0);
   --accent-foreground: oklch(0.985 0 0);
+
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
+
+  --border: oklch(0.3 0 0);
+  --input: oklch(0.25 0 0);
+
   --ring: oklch(0.556 0 0);
+
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
+
+  --sidebar: oklch(0.18 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent: oklch(0.25 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-border: oklch(0.3 0 0);
   --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
+  * {
+    @apply border-border;
+  }
+
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   h1,
@@ -274,6 +272,7 @@
   h5,
   h6 {
     font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
   }
 
   p,
@@ -283,19 +282,23 @@
   textarea,
   button,
   a {
-    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 }
 
+/* ==================== UTILITY CLASSES ==================== */
 @utility flex-center {
   @apply flex items-center justify-center;
 }
+
 @utility flex-between {
   @apply flex items-center justify-between;
 }
+
 @utility flex-start {
   @apply flex items-center justify-start;
 }
+
 @utility flex-end {
   @apply flex items-center justify-end;
 }
@@ -303,9 +306,11 @@
 @utility flex-col-center {
   @apply flex flex-col items-center justify-center;
 }
+
 @utility flex-col-start {
-  @apply flex flex-col;
+  @apply flex flex-col items-start;
 }
+
 @utility flex-col-between {
   @apply flex flex-col justify-between;
 }

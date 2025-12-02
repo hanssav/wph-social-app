@@ -8,19 +8,19 @@ import {
 import { Button } from '@/components/ui/button';
 import { CardContent } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
-import { loginFields, loginSection } from '@/constants/auth.constants';
-import { useLogin } from '@/hooks';
+import { registerFields, registerSection } from '@/constants/auth.constants';
+import { useRegister } from '@/hooks/use-register';
 
-export default function LoginPage() {
-  const { footer, title, btnLabel } = loginSection;
-  const { form, loginMutation, onSubmit } = useLogin();
+export default function Register() {
+  const { footer, title, btnLabel } = registerSection;
+  const { form, onSubmit, registerMutation } = useRegister();
 
   return (
     <AuthCCard title={title}>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5'>
-            {loginFields.map((item) => (
+            {registerFields.map((item) => (
               <FormFields
                 key={item.name}
                 control={form.control}
@@ -30,9 +30,9 @@ export default function LoginPage() {
             <Button
               type='submit'
               className='w-full h-12'
-              disabled={loginMutation.isPending}
+              disabled={registerMutation.isPending}
             >
-              {loginMutation.isPending ? btnLabel.isPending : btnLabel.iddle}
+              {registerMutation.isPending ? btnLabel.isPending : btnLabel.iddle}
             </Button>
             <AuthCardBtnAction
               q={footer.question}
