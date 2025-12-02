@@ -8,13 +8,14 @@ import { Search, X } from 'lucide-react';
 import NavDropdownMenu from './nav-dropdown-menu';
 import { cn } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import NavContainer from './nav-container';
 
 const Navbar = () => {
   const { user, token } = useAppSelector((state: RootState) => state.auth);
 
   const [menu, setMenu] = React.useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false);
-  const isLoggedIn = Boolean(!token);
+  const isLoggedIn = Boolean(token);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -35,7 +36,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className='base-container-x flex-between py-4 gap-6'>
+    <NavContainer>
       <ImageLogo className={cn(isSearchOpen && 'hidden')} />
 
       <NavSearchBar
@@ -63,7 +64,7 @@ const Navbar = () => {
           )}
         </span>
       </span>
-    </nav>
+    </NavContainer>
   );
 };
 

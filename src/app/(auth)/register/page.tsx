@@ -4,7 +4,7 @@ import { FormFields } from '@/components/container';
 import {
   AuthCardBtnAction,
   AuthCCard,
-} from '@/components/psges/auth/auth-card';
+} from '@/components/pages/auth/auth-card';
 import { Button } from '@/components/ui/button';
 import { CardContent } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';

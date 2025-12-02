@@ -1,7 +1,7 @@
 'use client';
 
-import { ImageLogo } from '@/components/container';
-import Navbar from '@/components/psges/user/navbar';
+import FooterTabs from '@/components/pages/user/footer-tabs';
+import Navbar from '@/components/pages/user/navbar';
 import { useAuth } from '@/hooks/use-auth';
 
 export default function DashboardLayout({
@@ -20,9 +20,10 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className='min-h-screen'>
+    <div className='relative min-h-screen'>
       <Navbar />
-      <main className='mx-auto w-full  max-w-7xl px-4 py-8'>{children}</main>
+      <main className='relative top-[64px] base-container-y'>{children}</main>
+      <FooterTabs />
     </div>
   );
 }

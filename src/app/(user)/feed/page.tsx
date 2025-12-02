@@ -1,11 +1,7 @@
 const FeedPage = () => {
   return (
-    <div className=''>
-      FeedPage
-      <p className='text-xl-bold'>hais gksd</p>
-      <p className='text-md-regular'>ini regular</p>
-      <p className='text-md-semibold'> semibold</p>
-      <p className='text-display-2xl-semibold'> semibold</p>
+    <div className='container-800'>
+      <h1 className='text-display-xl-bold'>Content</h1>
     </div>
   );
 };

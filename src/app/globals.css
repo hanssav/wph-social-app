@@ -320,9 +320,30 @@
 }
 
 @utility base-container-y {
-  @apply py-4 md:py-20;
+  @apply py-4 md:py-10;
 }
 
-@utility base-container {
-  @apply max-w-302 mx-auto my-0 px-6 py-6 md:py-20 flex flex-col justify-start items-start gap-6 lg:gap-12 w-full;
+/* footer tabs */
+@utility container-360 {
+  @apply max-w-[360px] mx-auto my-0 px-4;
+}
+
+@utility container-452 {
+  @apply max-w-[452px] mx-auto my-0 px-4;
+}
+
+@utility container-600 {
+  @apply max-w-[600px] mx-auto my-0 px-4;
+}
+
+@utility container-800 {
+  @apply max-w-[800px] mx-auto my-0 px-4;
+}
+
+@utility container-812 {
+  @apply max-w-[812px] mx-auto my-0 px-4;
+}
+
+@utility container-1200 {
+  @apply max-w-[1200px] mx-auto my-0 px-4;
 }
