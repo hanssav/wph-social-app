@@ -1,4 +1,5 @@
-import { JwtToken, MePayload, User } from '@/types';
+import { cookieHelpers } from '@/lib/cookies';
+import { JwtToken, MePayload } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type AuthState = {
@@ -21,7 +22,7 @@ const authSlice = createSlice({
   reducers: {
     setToken: (state, action: PayloadAction<JwtToken>) => {
       state.token = action.payload;
-      localStorage.setItem('auth_token', action.payload);
+      cookieHelpers.set(action.payload);
     },
     setUser: (state, action: PayloadAction<MePayload>) => {
       state.user = action.payload;
@@ -33,14 +34,13 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.isLoading = false;
-
-      localStorage.removeItem('auth_token');
+      cookieHelpers.remove();
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
     hydrateToken: (state) => {
-      const token = localStorage.getItem('auth_token');
+      const token = cookieHelpers.get();
       if (token) {
         state.token = token;
         state.isLoading = true;
@@ -53,5 +53,6 @@ const authSlice = createSlice({
 
 export const { setToken, setUser, logout, setLoading, hydrateToken } =
   authSlice.actions;
+
 const authReducer = authSlice.reducer;
 export default authReducer;

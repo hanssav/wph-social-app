@@ -1,6 +1,6 @@
 'use client';
-
 import { getErrorMessage } from '@/api';
+import { PATH } from '@/constants';
 import { LoginSchema } from '@/schema/auth.schema';
 import { authServices } from '@/services';
 import { useAppDispatch } from '@/store/hooks';
@@ -30,14 +30,21 @@ export const useLogin = () => {
     onSuccess: async (data) => {
       dispatch(setToken(data.data.token));
 
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
       try {
-        // await meServices.me();
         queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
-        toast.success('Login Succesful!');
-        router.push('/feed');
+        toast.success('Login Successful!');
+
+        // window.location.href = PATH.FEED;
+        router.push(PATH.FEED);
+        // router.refresh();
       } catch (error) {
         toast.error(getErrorMessage(error));
       }
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
     },
   });
 

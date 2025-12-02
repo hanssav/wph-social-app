@@ -1,5 +1,5 @@
 'use client';
-import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { IMAGES } from '@/constants';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
@@ -34,7 +34,7 @@ const AuthCCard = ({ children, title }: Props) => {
             {title}
           </CardTitle>
         </CardHeader>
-        {children}
+        <CardContent>{children}</CardContent>
       </Card>
     </div>
   );

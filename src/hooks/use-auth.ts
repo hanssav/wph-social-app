@@ -7,7 +7,6 @@ import React from 'react';
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
-
   const { token, user, isAuthenticated, isLoading } = useAppSelector(
     (state: RootState) => state.auth
   );
@@ -24,28 +23,27 @@ export const useAuth = () => {
     staleTime: Infinity,
   });
 
-  // Update Redux when user data is fetched
   React.useEffect(() => {
     if (data?.data) {
       dispatch(setUser(data.data));
     }
   }, [data, dispatch]);
 
-  // Handle fetch error (invalid token)
   React.useEffect(() => {
     if (error) {
       dispatch(logout());
     }
   }, [error, dispatch]);
 
-  // Update loading state
   React.useEffect(() => {
     if (!token) {
       dispatch(setLoading(false));
     } else if (isFetching) {
       dispatch(setLoading(true));
+    } else if (user) {
+      dispatch(setLoading(false));
     }
-  }, [token, isFetching, dispatch]);
+  }, [token, isFetching, user, dispatch]);
 
   return {
     user,

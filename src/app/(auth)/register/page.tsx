@@ -17,31 +17,25 @@ export default function Register() {
 
   return (
     <AuthCCard title={title}>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5'>
-            {registerFields.map((item) => (
-              <FormFields
-                key={item.name}
-                control={form.control}
-                config={item}
-              />
-            ))}
-            <Button
-              type='submit'
-              className='w-full h-12'
-              disabled={registerMutation.isPending}
-            >
-              {registerMutation.isPending ? btnLabel.isPending : btnLabel.iddle}
-            </Button>
-            <AuthCardBtnAction
-              q={footer.question}
-              a={footer.answer}
-              src={footer.src}
-            />
-          </form>
-        </Form>
-      </CardContent>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5'>
+          {registerFields.map((item) => (
+            <FormFields key={item.name} control={form.control} config={item} />
+          ))}
+          <Button
+            type='submit'
+            className='w-full h-12'
+            disabled={registerMutation.isPending}
+          >
+            {registerMutation.isPending ? btnLabel.isPending : btnLabel.iddle}
+          </Button>
+          <AuthCardBtnAction
+            q={footer.question}
+            a={footer.answer}
+            src={footer.src}
+          />
+        </form>
+      </Form>
     </AuthCCard>
   );
 }

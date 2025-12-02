@@ -6,7 +6,6 @@ import {
   AuthCCard,
 } from '@/components/psges/auth/auth-card';
 import { Button } from '@/components/ui/button';
-import { CardContent } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { loginFields, loginSection } from '@/constants/auth.constants';
 import { useLogin } from '@/hooks';
@@ -17,31 +16,25 @@ export default function LoginPage() {
 
   return (
     <AuthCCard title={title}>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5'>
-            {loginFields.map((item) => (
-              <FormFields
-                key={item.name}
-                control={form.control}
-                config={item}
-              />
-            ))}
-            <Button
-              type='submit'
-              className='w-full h-12'
-              disabled={loginMutation.isPending}
-            >
-              {loginMutation.isPending ? btnLabel.isPending : btnLabel.iddle}
-            </Button>
-            <AuthCardBtnAction
-              q={footer.question}
-              a={footer.answer}
-              src={footer.src}
-            />
-          </form>
-        </Form>
-      </CardContent>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5'>
+          {loginFields.map((item) => (
+            <FormFields key={item.name} control={form.control} config={item} />
+          ))}
+          <Button
+            type='submit'
+            className='w-full h-12'
+            disabled={loginMutation.isPending}
+          >
+            {loginMutation.isPending ? btnLabel.isPending : btnLabel.iddle}
+          </Button>
+          <AuthCardBtnAction
+            q={footer.question}
+            a={footer.answer}
+            src={footer.src}
+          />
+        </form>
+      </Form>
     </AuthCCard>
   );
 }
