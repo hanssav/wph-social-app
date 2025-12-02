@@ -1,5 +1,7 @@
 'use client';
 
+import { ImageLogo } from '@/components/container';
+import Navbar from '@/components/psges/user/navbar';
 import { useAuth } from '@/hooks/use-auth';
 
 export default function DashboardLayout({
@@ -19,9 +21,7 @@ export default function DashboardLayout({
 
   return (
     <div className='min-h-screen'>
-      <nav className=''>
-        <div className='mx-auto w-full max-w-7xl px-4 py-4'></div>
-      </nav>
+      <Navbar />
       <main className='mx-auto w-full  max-w-7xl px-4 py-8'>{children}</main>
     </div>
   );

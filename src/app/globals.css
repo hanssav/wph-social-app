@@ -314,3 +314,15 @@
 @utility flex-col-between {
   @apply flex flex-col justify-between;
 }
+
+@utility base-container-x {
+  @apply max-w-302 mx-auto my-0 px-4;
+}
+
+@utility base-container-y {
+  @apply py-4 md:py-20;
+}
+
+@utility base-container {
+  @apply max-w-302 mx-auto my-0 px-6 py-6 md:py-20 flex flex-col justify-start items-start gap-6 lg:gap-12 w-full;
+}

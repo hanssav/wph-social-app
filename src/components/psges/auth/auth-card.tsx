@@ -1,8 +1,7 @@
 'use client';
+import { ImageLogo } from '@/components/container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { IMAGES } from '@/constants';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -21,16 +20,7 @@ const AuthCCard = ({ children, title }: Props) => {
         )}
       >
         <CardHeader className='flex-center'>
-          <div className='relative overflow-hidden w-[137px] h-9 mx-auto'>
-            <Image
-              alt='logo'
-              src={IMAGES.LOGO}
-              loading='eager'
-              className='object-cover'
-              sizes='(max-width: 768px) 120px, 137px'
-              fill
-            />
-          </div>
+          <ImageLogo className='mx-auto ' />
           <CardTitle className='text-xl-bold md:text-display-xs-bold text-center'>
             {title}
           </CardTitle>

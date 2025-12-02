@@ -1,4 +1,5 @@
 'use client';
+import Spin from '@/components/ui/spin';
 import { authRoutes, PATH, protectedRoutes, publicRoutes } from '@/constants';
 import { useAuth } from '@/hooks/use-auth';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -48,11 +49,7 @@ export default function AuthProvider({
   }, [isHydrated, isLoading, isAuthenticated, pathname, router]);
 
   if (!isHydrated || isLoading) {
-    return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary-200'></div>
-      </div>
-    );
+    return <Spin />;
   }
 
   return <>{children}</>;
