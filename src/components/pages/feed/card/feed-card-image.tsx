@@ -1,6 +1,10 @@
-import Image from 'next/image';
+import Image, { ImageProps } from 'next/image';
 
-export const FeedCardImage = ({ src, alt }: { src: string; alt: string }) => {
+export const FeedCardImage = ({
+  src,
+  alt,
+  ...props
+}: { src: string; alt: string } & ImageProps) => {
   return (
     <div
       className='
@@ -17,6 +21,8 @@ export const FeedCardImage = ({ src, alt }: { src: string; alt: string }) => {
         alt={alt}
         sizes='(max-width: 768px) 361px, 600px'
         className='object-cover'
+        loading='eager'
+        {...props}
       />
     </div>
   );

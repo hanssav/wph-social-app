@@ -17,6 +17,7 @@ import { ExpandableText } from '@/components/container';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { ModalCommentContent } from '../modal/modal-comment-content';
 dayjs.extend(relativeTime);
 
 export const FeedCards = ({ className, ...props }: ComponentProps<'div'>) => {
@@ -42,9 +43,15 @@ export const FeedCardItem = ({ post }: FeedCardItemProps) => {
       openDialog({
         title: 'Likes',
         content: <ModalLikesContent postId={post.id} />,
+        // className: 'md:max-w-[1200px]',
       });
     },
-    onShowComments: () => {},
+    onShowComments: () => {
+      openDialog({
+        content: <ModalCommentContent post={post} />,
+        className: 'md:max-w-[1200px] p-0!',
+      });
+    },
     onShowShare: () => {},
   });
 

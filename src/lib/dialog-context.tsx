@@ -12,6 +12,7 @@ import {
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { XIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 /**
  * Example Usage
@@ -54,6 +55,7 @@ interface DialogState {
   content?: React.ReactNode;
   footer?: React.ReactNode;
   onOpenChange?: (open: boolean) => void;
+  className?: string;
 }
 
 const DialogContext = React.createContext<{
@@ -117,10 +119,11 @@ export const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
 
               // Animasi: slide dari bawah
               'max-md:data-[state=open]:animate-slide-in-from-bottom',
-              'max-md:data-[state=closed]:animate-slide-out-to-bottom'
+              'max-md:data-[state=closed]:animate-slide-out-to-bottom',
+              state.className
             )}
           >
-            {(state.title || state.description) && (
+            {state.title || state.description ? (
               <DialogHeader className='text-start'>
                 {state.title && <DialogTitle>{state.title}</DialogTitle>}
                 <DialogDescription
@@ -129,6 +132,18 @@ export const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
                   {state.description ?? state.title}
                 </DialogDescription>
               </DialogHeader>
+            ) : (
+              // Handdle title & description hidden
+              <VisuallyHidden asChild>
+                <DialogHeader>
+                  <DialogTitle>{state.title}</DialogTitle>
+                  <DialogDescription
+                    className={cn(!state.description && 'hidden')}
+                  >
+                    {state.title}
+                  </DialogDescription>
+                </DialogHeader>
+              </VisuallyHidden>
             )}
 
             {state.content}

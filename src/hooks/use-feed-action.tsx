@@ -14,7 +14,7 @@ export type FeedIconAction = {
   id: string;
   icon: LucideIcon;
   filledIcon?: LucideIcon;
-  iconValue: number | boolean | undefined;
+  iconValue?: number | boolean | undefined;
   labelValue?: number | boolean;
   onIconAction: () => void;
   onLabelAction: () => void;
@@ -87,6 +87,8 @@ export const useFeedActions = ({
     }
   };
 
+  console.log(post?.commentCount, 'comment count');
+
   const FEED_CARD_ICONS: FeedIconAction[] = [
     {
       id: 'like',
@@ -100,14 +102,15 @@ export const useFeedActions = ({
     {
       id: 'comment',
       icon: MessageCircleMore,
-      iconValue: post?.commentCount,
+      labelValue: post?.commentCount ?? 0,
       onIconAction: onShowComments,
       onLabelAction: onShowComments,
     },
     {
       id: 'share',
       icon: Send,
-      iconValue: post?.shareCount ?? 0,
+      // iconValue: post?.shareCount ?? 0,
+      labelValue: post?.shareCount ?? 0,
       onIconAction: onShowShare,
       onLabelAction: onShowShare,
     },

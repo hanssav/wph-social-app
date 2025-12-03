@@ -1,5 +1,6 @@
 import { apiInstance } from '@/api';
-import { AuthResponse, LoginRequest, RegisterRequest } from '@/types';
+import { LoginRequest, RegisterRequest } from '@/schema/auth.schema';
+import { AuthResponse } from '@/types';
 
 export const authServices = {
   login: async (req: LoginRequest): Promise<AuthResponse> => {

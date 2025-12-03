@@ -58,7 +58,7 @@ const AppProvider = ({ children }: Props) => {
         <DialogProvider>{children}</DialogProvider>
         <Toaster richColors position='top-right' />
 
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </ReduxProvider>
   );
