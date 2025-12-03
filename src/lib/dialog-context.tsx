@@ -12,31 +12,40 @@ import {
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { XIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 
-// example use
-
-//   openDialog({
-//     title: 'Hapus Item?',
-//     description: 'Tindakan ini tidak bisa dibatalkan.',
-//     content: <p className='py-4'>Kamu yakin mau hapus data ini?</p>,
-//     footer: (
-//       <>
-//         <Button variant='outline' onClick={() => closeDialog()}>
-//           Batal
-//         </Button>
-//         <Button
-//           variant='destructive'
-//           onClick={() => {
-//             alert('Terhapus!');
-//             closeDialog();
-//           }}
-//         >
-//           Hapus
-//         </Button>
-//       </>
-//     ),
-//   });
+/**
+ * Example Usage
+ * -----------------------------------------
+ * Cara membuka dialog dengan konten, title, description,
+ * dan custom footer.
+ *
+ * openDialog({
+ *   title: 'Hapus Item?',
+ *   description: 'Tindakan ini tidak bisa dibatalkan.',
+ *   content: (
+ *     <p className="py-4">
+ *       Kamu yakin mau hapus data ini?
+ *     </p>
+ *   ),
+ *   footer: (
+ *     <>
+ *       <Button variant="outline" onClick={() => closeDialog()}>
+ *         Batal
+ *       </Button>
+ *
+ *       <Button
+ *         variant="destructive"
+ *         onClick={() => {
+ *           alert('Terhapus!');
+ *           closeDialog();
+ *         }}
+ *       >
+ *         Hapus
+ *       </Button>
+ *     </>
+ *   ),
+ * });
+ */
 
 interface DialogState {
   isOpen: boolean;
