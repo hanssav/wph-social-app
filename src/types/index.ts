@@ -6,3 +6,4 @@ export * from './base.types';
 export * from './post.types';
 export * from './feed.types';
 export * from './like.types';
+export * from './follow.types';

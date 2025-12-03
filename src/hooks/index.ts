@@ -6,3 +6,4 @@ export * from './use-like';
 export * from './use-logout';
 export * from './use-post';
 export * from './use-register';
+export * from './use-follow';

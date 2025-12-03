@@ -5,7 +5,7 @@ import { useInfiniteFeeds } from '@/hooks/use-infinite-feeds';
 const FeedPage = () => {
   const { data } = useInfiniteFeeds();
 
-  const feeds = data?.pages.flatMap((feed) => feed.data?.items);
+  const feeds = data?.pages.flatMap((feed) => feed.data?.items ?? []) ?? [];
 
   return (
     <div className='container-600'>

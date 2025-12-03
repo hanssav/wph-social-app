@@ -1,10 +1,14 @@
 import { likeService } from '@/services';
-import { LikeListPostParams, LikesPostApiResponse } from '@/types';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-export const useGetLikesByPost = (postId?: number) => {
+export const likeKeys = {
+  getLikes: (postId: number) => ['likes', 'post', postId],
+  all: ['likes'],
+};
+
+export const useGetLikesByPost = (postId: number) => {
   return useInfiniteQuery({
-    queryKey: ['likes', 'post', postId],
+    queryKey: likeKeys.getLikes(postId),
     queryFn: ({ pageParam = 1 }) => {
       if (!postId) return Promise.reject('no postId');
       return likeService.getByPostId({
@@ -23,6 +27,7 @@ export const useGetLikesByPost = (postId?: number) => {
       return page < totalPages ? page + 1 : undefined;
     },
     enabled: !!postId,
-    staleTime: 5 * 60 * 1000,
+    refetchOnMount: true,
+    staleTime: 0,
   });
 };
