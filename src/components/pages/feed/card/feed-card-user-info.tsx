@@ -1,35 +1,56 @@
-import { getImage } from '@/lib/utils';
-import { Post } from '@/types';
-import dayjs from 'dayjs';
-import Image from 'next/image';
+import { cn, getImage } from '@/lib/utils';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { User } from 'lucide-react';
+import { ComponentProps } from 'react';
 
-export const FeedUserInfo = (post: Partial<Post>) => {
-  const { author } = post;
-  const dayAgo = dayjs(post.createdAt).fromNow();
+type UserAvatarProps = {
+  src: string;
+  alt: string;
+  className?: string;
+};
 
+export function UserInfoAvatar({ src, alt, className }: UserAvatarProps) {
   return (
-    <div className='flex-start gap-2 md:gap-3'>
-      <div
-        className='
-          relative overflow-hidden 
-          size-11 md:size-[64px] 
-          aspect-square
-        '
-      >
-        <Image
-          src={getImage(author?.avatarUrl, 'avatar')}
-          alt={author?.username ?? 'me'}
-          loading='lazy'
-          fill
-          className='object-cover rounded-full'
-          sizes='(max-width: 768px) 44px, 64px'
-        />
-      </div>
+    <Avatar className={cn('size-11 md:size-16', className)}>
+      <AvatarImage src={src} alt={alt} className='object-cover' />
 
-      <div>
-        <h4 className='text-sm-bold md:text-md-bold'>{author?.username}</h4>
-        <p className='text-xs-regular md:text-sm-regular'>{dayAgo}</p>
-      </div>
-    </div>
+      <AvatarFallback className='bg-muted text-muted-foreground font-medium'>
+        {alt?.toUpperCase()}
+      </AvatarFallback>
+    </Avatar>
+  );
+}
+
+export const UserInfoContent = ({
+  className,
+  ...props
+}: ComponentProps<'div'>) => {
+  return <div className={cn('space-y-0.5', className)} {...props} />;
+};
+
+export const UserInfoTitle = ({
+  className,
+  ...props
+}: ComponentProps<'h4'>) => {
+  return (
+    <h4 className={cn('text-sm-bold md:text-md-bold', className)} {...props} />
+  );
+};
+
+export const UserInfoSubTitle = ({
+  className,
+  ...props
+}: ComponentProps<'p'>) => {
+  return (
+    <p
+      className={cn('text-xs-regular md:text-sm-regular', className)}
+      {...props}
+    />
+  );
+};
+
+export const UserInfo = ({ className, ...props }: ComponentProps<'div'>) => {
+  return (
+    <div className={cn('flex-start gap-2 md:gap-3', className)} {...props} />
   );
 };

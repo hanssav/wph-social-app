@@ -1,17 +1,23 @@
 import { cn, getImage } from '@/lib/utils';
 import { Post } from '@/types';
 import { ComponentProps } from 'react';
+import { FeedCardImage } from './feed-card-image';
+import { FeedCardActions, FeedCardActionsItem } from './feed-card.-icons';
+import { useDialog } from '@/lib/dialog-context';
+import { useGetLikesByPost } from '@/hooks/use-like';
+import {
+  UserInfo,
+  UserInfoAvatar,
+  UserInfoContent,
+  UserInfoSubTitle,
+  UserInfoTitle,
+} from './feed-card-user-info';
+import { ModalLikesContent } from './modal-likes-open';
+import { useFeedActions } from '@/hooks';
+import { ExpandableText } from '@/components/container';
+
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { FeedUserInfo } from './feed-card-user-info';
-import { FeedCardImage } from './feed-card-image';
-import {
-  FEED_CARD_ICONS,
-  FeedCardActions,
-  FeedCardActionsItem,
-} from './feed-card.-icons';
-import ExpandableText from '@/components/container/expandable-text';
-
 dayjs.extend(relativeTime);
 
 export const FeedCards = ({ className, ...props }: ComponentProps<'div'>) => {
@@ -28,27 +34,51 @@ type FeedCardItemProps = {
 };
 
 export const FeedCardItem = ({ post }: FeedCardItemProps) => {
+  const dayAgo = dayjs(post?.createdAt).fromNow();
+
+  const { data, isLoading } = useGetLikesByPost(post?.id);
+  const likes = data?.pages.flatMap((page) => page.data?.users ?? []) ?? [];
+  const { openDialog, closeDialog } = useDialog();
+
+  const { iconActions } = useFeedActions({
+    post,
+    onShowLikes: () => {
+      openDialog({
+        title: 'Likes',
+        content: <ModalLikesContent likes={likes} />,
+      });
+    },
+    onShowComments: () => {},
+    onShowShare: () => {},
+  });
+
   return (
     <div className='space-y-2 md:space-y-3'>
-      {/* Image and User Information */}
       <div className='space-y-2 md:space-y-3'>
-        <FeedUserInfo {...post} />
+        <UserInfo>
+          <UserInfoAvatar
+            src={post?.author.avatarUrl ?? ''}
+            alt={post?.author?.name ?? 'user'}
+          />
+          <UserInfoContent>
+            <UserInfoTitle>{post?.author.name}</UserInfoTitle>
+            <UserInfoSubTitle>{dayAgo}</UserInfoSubTitle>
+          </UserInfoContent>
+        </UserInfo>
         <FeedCardImage
           src={getImage(post?.imageUrl)}
           alt={post?.caption ?? 'post image'}
         />
       </div>
-      {/* like comment share etc */}
       <div className='flex-between'>
         <FeedCardActions>
-          {FEED_CARD_ICONS(post).map(
+          {iconActions.map(
             (icon, idx) =>
               idx < 3 && <FeedCardActionsItem data={icon} key={idx} />
           )}
         </FeedCardActions>
-        <FeedCardActionsItem data={FEED_CARD_ICONS(post)[3]} />
+        <FeedCardActionsItem data={iconActions[3]} />
       </div>
-      {/* detail, user, show more descripton */}
       <div className='md:space-y-1'>
         <h3 className='text-sm-bold md:text-md-bold'>{post?.author.name}</h3>
         <ExpandableText text={post?.caption ?? ''} />

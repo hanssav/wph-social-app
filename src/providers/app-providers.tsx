@@ -13,6 +13,7 @@ import { toast, Toaster } from 'sonner';
 import { store } from '@/store';
 import { hydrateToken } from '@/store/slices/auth-slice';
 import { ThemeProvider } from './theme-provider';
+import { DialogProvider } from '@/lib/dialog-context';
 
 type Props = {
   children: React.ReactNode;
@@ -54,7 +55,7 @@ const AppProvider = ({ children }: Props) => {
   return (
     <ReduxProvider store={store}>
       <QueryClientProvider client={queryClient}>
-        {children}
+        <DialogProvider>{children}</DialogProvider>
         <Toaster richColors position='top-right' />
 
         <ReactQueryDevtools initialIsOpen={false} />

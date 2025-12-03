@@ -3,9 +3,13 @@ import { FeedResponse, GetFeedParams } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { undefined } from 'zod';
 
+export const feedKeys = {
+  all: (params?: GetFeedParams) => ['feeds', params],
+};
+
 export const useInfiniteFeeds = (params?: GetFeedParams) => {
   return useInfiniteQuery<FeedResponse>({
-    queryKey: ['feeds', params],
+    queryKey: feedKeys.all(params),
     queryFn: async ({ pageParam = 1 }) => {
       const finalParams = { ...params, page: Number(pageParam) };
       const res = await feedService.get(finalParams);

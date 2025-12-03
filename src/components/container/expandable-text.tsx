@@ -5,10 +5,7 @@ type ExpandableTextProps = {
   limit?: number;
 };
 
-export default function ExpandableText({
-  text,
-  limit = 120,
-}: ExpandableTextProps) {
+export function ExpandableText({ text, limit = 120 }: ExpandableTextProps) {
   const [expanded, setExpanded] = React.useState(false);
 
   const isLong = text.length > limit;
