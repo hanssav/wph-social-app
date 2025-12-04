@@ -12,9 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Bookmark, Smile } from 'lucide-react';
 import Image from 'next/image';
-import { CommentListResponse, Post } from '@/types';
-import { feedKeys } from '@/hooks';
-import React from 'react';
+import { Post } from '@/types';
 import Spin from '@/components/ui/spin';
 import {
   DropdownMenu,
@@ -24,6 +22,8 @@ import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { EMOJIS } from '@/constants/emojis.constants';
 import { useCommentWithActions } from '../hooks/use-comment-with-Actions';
 import { useInputWithEmoji } from '../hooks/use-input-with-emoji';
+import { FeedCardActions, FeedCardActionsItem } from '../card/feed-card.-icons';
+import { useFeedActions } from '@/hooks';
 
 type Props = {
   post: Post;
@@ -42,6 +42,8 @@ export const ModalCommentContent = ({ post }: Props) => {
     useCommentWithActions({ post: post, setCommentText, commentText });
 
   const lastCreatedTIme = dayjs(post.createdAt).fromNow();
+
+  const { iconActions } = useFeedActions({ post });
 
   return (
     <div className='flex flex-col md:flex-row md:max-h-[768px]'>
@@ -114,66 +116,74 @@ export const ModalCommentContent = ({ post }: Props) => {
           </div>
         </div>
 
-        <div className='md:absolute bottom-14 right-8 '>
-          <Bookmark className='stroke-neutral-25 size-6' />
-        </div>
+        <div className='absolute bottom-0  w-full mx-0 px-8 backdrop-blur-lg py-2'>
+          <div className='flex-between'>
+            <FeedCardActions>
+              {iconActions.map(
+                (icon, idx) =>
+                  idx < 3 && <FeedCardActionsItem data={icon} key={idx} />
+              )}
+            </FeedCardActions>
 
-        <div className='absolute bottom-0 flex-center gap-2 w-full mx-0 px-8 backdrop-blur-lg py-2'>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant='outline'
-                size='icon-lg'
-                className='rounded-md border-neutral-900 size-12'
-              >
-                <Smile />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className='grid grid-cols-6 gap-[10px] p-4'
-              side='top'
-              align='start'
-              sideOffset={10}
-            >
-              {EMOJIS.map((emoji, idx) => (
+            <FeedCardActionsItem data={iconActions[3]} />
+          </div>
+          <div className='flex-center gap-2 w-full'>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
                 <Button
-                  key={idx}
-                  size={'ghost'}
-                  variant={'ghost'}
-                  className='size-6 text-2xl p-0 hover:scale-125 transition-transform'
-                  onClick={() => insertEmoji(emoji)}
+                  variant='outline'
+                  size='icon-lg'
+                  className='rounded-md border-neutral-900 size-12'
                 >
-                  {emoji}
+                  <Smile />
                 </Button>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className='grid grid-cols-6 gap-[10px] p-4'
+                side='top'
+                align='start'
+                sideOffset={10}
+              >
+                {EMOJIS.map((emoji, idx) => (
+                  <Button
+                    key={idx}
+                    size={'ghost'}
+                    variant={'ghost'}
+                    className='size-6 text-2xl p-0 hover:scale-125 transition-transform'
+                    onClick={() => insertEmoji(emoji)}
+                  >
+                    {emoji}
+                  </Button>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-          <div className='relative flex-1'>
-            <Input
-              ref={inputRef}
-              value={commentText}
-              onChange={handleInputChange}
-              onClick={handleCursorChange}
-              onKeyUp={handleCursorChange}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  handleAddComment();
-                }
-              }}
-              disabled={addCommentMutation.isPending}
-              className='flex-1 placeholder:text-neutral-600'
-              placeholder='Add Comment'
-            />
-            <Button
-              variant='ghost'
-              onClick={handleAddComment}
-              disabled={!commentText.trim() || addCommentMutation.isPending}
-              className='text-neutral-600 absolute right-0 -translate-y-1/2 top-1/2 h-12 rounded-md disabled:opacity-50'
-            >
-              {addCommentMutation.isPending ? 'Posting...' : 'Post'}
-            </Button>
+            <div className='relative flex-1'>
+              <Input
+                ref={inputRef}
+                value={commentText}
+                onChange={handleInputChange}
+                onClick={handleCursorChange}
+                onKeyUp={handleCursorChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleAddComment();
+                  }
+                }}
+                disabled={addCommentMutation.isPending}
+                className='flex-1 placeholder:text-neutral-600'
+                placeholder='Add Comment'
+              />
+              <Button
+                variant='ghost'
+                onClick={handleAddComment}
+                disabled={!commentText.trim() || addCommentMutation.isPending}
+                className='text-primary-200 hover:text-primary-200/80 absolute right-0 -translate-y-1/2 top-1/2 h-12 rounded-md disabled:opacity-50'
+              >
+                {addCommentMutation.isPending ? 'Posting...' : 'Post'}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

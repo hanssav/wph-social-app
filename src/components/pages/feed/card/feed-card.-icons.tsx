@@ -26,12 +26,11 @@ export const FeedCardActionsItem = ({
         disabled={data.isLoading}
       >
         <Icon
-          className={cn(
-            'size-5',
-            data.iconValue &&
-              data.id === 'like' &&
-              'fill-accent-red stroke-accent-red'
-          )}
+          className={cn('size-5', {
+            'fill-accent-red stroke-accent-red':
+              data.iconValue && data.id === 'like',
+            'fill-neutral-25': data.iconValue && data.id === 'save',
+          })}
         />
       </Button>
       <Button
