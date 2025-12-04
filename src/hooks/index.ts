@@ -7,3 +7,5 @@ export * from './use-logout';
 export * from './use-post';
 export * from './use-register';
 export * from './use-follow';
+export * from './use-search-users';
+export * from './use-nav-search';

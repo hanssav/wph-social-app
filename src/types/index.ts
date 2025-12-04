@@ -9,3 +9,4 @@ export * from './like.types';
 export * from './follow.types';
 export * from './comment.types';
 export * from './save.types';
+export * from './user.types';
