@@ -49,7 +49,11 @@ export default function AuthProvider({
   }, [isHydrated, isLoading, isAuthenticated, pathname, router]);
 
   if (!isHydrated || isLoading) {
-    return <Spin />;
+    return (
+      <div className='min-h-screen flex items-center justify-center'>
+        <Spin />;
+      </div>
+    );
   }
 
   return <>{children}</>;
