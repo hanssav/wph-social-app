@@ -8,6 +8,7 @@ export const PATH = {
   FORM: {
     BASE: '/form',
     ADD_POST: '/form/add-post',
+    UPDATE_PROFILE: '/form/update-profile',
   },
 };
 

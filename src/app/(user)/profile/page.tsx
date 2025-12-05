@@ -25,8 +25,11 @@ import {
   EMPTY_POST_STATE,
   EMPTY_SAVED_STATE,
 } from '@/constants/profile.constants';
+import { useRouter } from 'next/navigation';
+import { PATH } from '@/constants';
 
 const Profile = () => {
+  const router = useRouter();
   const { user, isLoading } = useAppSelector((state: RootState) => state.auth);
   const { profile, stats } = user ?? {};
 
@@ -65,8 +68,6 @@ const Profile = () => {
     );
   }
 
-  console.log(posts);
-
   return (
     <div className='container-812 space-y-4'>
       {/* SECTION USER INFORMATION */}
@@ -89,7 +90,11 @@ const Profile = () => {
             </UserInfoContent>
           </UserInfo>
           <div className='flex-center gap-3'>
-            <Button variant='outline' className='flex-1'>
+            <Button
+              onClick={() => router.push(PATH.FORM.UPDATE_PROFILE)}
+              variant='outline'
+              className='flex-1'
+            >
               Edit Profile
             </Button>
             <Button className='' variant={'outline'}>
@@ -139,7 +144,7 @@ const Profile = () => {
         </TabsContent>
 
         <TabsContent value='saved'>
-          {saved && saved.length === 0 ? (
+          {saved && saved.length > 0 ? (
             <ProfileImages>
               {saved.map((save) => (
                 <ProfileImagesItem
