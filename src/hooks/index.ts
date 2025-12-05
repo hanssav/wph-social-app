@@ -9,3 +9,4 @@ export * from './use-register';
 export * from './use-follow';
 export * from './use-search-users';
 export * from './use-nav-search';
+export * from './use-profile-post';

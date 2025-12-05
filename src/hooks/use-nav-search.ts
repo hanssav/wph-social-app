@@ -30,21 +30,21 @@ export const useNavSearch = ({
   const users = data?.pages.flatMap((p) => p.data.users) || [];
 
   // Debug logging
-  React.useEffect(() => {
-    console.log('Search data:', {
-      totalUsers: users.length,
-      pages: data?.pages.length,
-      hasNextPage,
-      isFetchingNextPage,
-      isLoading,
-    });
-  }, [
-    users.length,
-    data?.pages.length,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  ]);
+  // React.useEffect(() => {
+  //   console.log('Search data:', {
+  //     totalUsers: users.length,
+  //     pages: data?.pages.length,
+  //     hasNextPage,
+  //     isFetchingNextPage,
+  //     isLoading,
+  //   });
+  // }, [
+  //   users.length,
+  //   data?.pages.length,
+  //   hasNextPage,
+  //   isFetchingNextPage,
+  //   isLoading,
+  // ]);
 
   // Infinite scroll with Intersection Observer
   const loadMoreRef = React.useRef<HTMLDivElement>(null);
@@ -53,13 +53,7 @@ export const useNavSearch = ({
     const observer = new IntersectionObserver(
       (entries) => {
         const first = entries[0];
-        console.log('Intersection:', {
-          isIntersecting: first.isIntersecting,
-          hasNextPage,
-          isFetchingNextPage,
-        });
         if (first.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          console.log('Fetching next page...');
           fetchNextPage();
         }
       },

@@ -1,4 +1,6 @@
+import { ApiResponse, ApiSuccess } from './api.types';
 import { User } from './auth.types';
+import { Post } from './post.types';
 
 export type UserProfile = User & {
   bio: string | null;
@@ -18,3 +20,9 @@ export type MePayload = {
 };
 
 export type MeResponse = ApiSuccess<MePayload>;
+
+// =============================
+// GET POST ME RESPONSE
+// =============================
+
+export type GetPostMeResponse = ApiResponse<{ items: Post[] }>;
