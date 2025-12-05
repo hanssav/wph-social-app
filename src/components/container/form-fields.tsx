@@ -19,7 +19,7 @@ export const FormFields = <T extends FieldValues>({
   control,
   config,
 }: Props<T>) => {
-  const { type, placeholder, autoComplete, options } = config;
+  const { type, placeholder, autoComplete, options, disabled } = config;
 
   return (
     <FormField
@@ -34,6 +34,8 @@ export const FormFields = <T extends FieldValues>({
               <Textarea
                 placeholder={placeholder}
                 {...field}
+                value={field.value ?? ''}
+                disabled={disabled}
                 className='min-h-[100px] max-h-96 resize-none overflow-y-auto'
               />
             );
@@ -65,6 +67,8 @@ export const FormFields = <T extends FieldValues>({
                 type='number'
                 placeholder={placeholder}
                 {...field}
+                value={field.value ?? ''}
+                disabled={disabled}
                 onChange={(e) => {
                   field.onChange(e.target.value);
                 }}
@@ -76,6 +80,7 @@ export const FormFields = <T extends FieldValues>({
             InputComponent = (
               <Input
                 type='file'
+                disabled={disabled}
                 onChange={(e) => field.onChange(e.target.files?.[0] || null)}
               />
             );
@@ -88,6 +93,8 @@ export const FormFields = <T extends FieldValues>({
                 placeholder={placeholder}
                 autoComplete={autoComplete}
                 {...field}
+                value={field.value ?? ''}
+                disabled={disabled}
               />
             );
             break;

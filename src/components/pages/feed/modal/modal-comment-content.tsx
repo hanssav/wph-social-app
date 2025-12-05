@@ -4,7 +4,7 @@ import {
   UserInfoContent,
   UserInfoTitle,
   UserInfoSubTitle,
-} from '../card/feed-card-user-info';
+} from '../../../container/user-info';
 import dayjs from 'dayjs';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';

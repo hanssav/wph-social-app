@@ -1,11 +1,10 @@
 'use client';
 import { getErrorMessage } from '@/api';
 import { PATH } from '@/constants';
-import { LoginSchema } from '@/schema/auth.schema';
+import { LoginRequest, LoginSchema } from '@/schema/auth.schema';
 import { authServices } from '@/services';
 import { useAppDispatch } from '@/store/hooks';
 import { setToken } from '@/store/slices/auth-slice';
-import { LoginRequest } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';

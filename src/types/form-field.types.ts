@@ -13,6 +13,7 @@ export type FormFieldType = {
   type: FieldType;
   placeholder?: string;
   autoComplete?: string;
+  disabled?: boolean;
 
   options?: { label: string; value: number }[];
 };

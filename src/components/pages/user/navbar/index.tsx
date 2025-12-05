@@ -45,7 +45,7 @@ const Navbar = () => {
           />
 
           {isLoggedIn ? (
-            <ProfileAvatar avatarUrl={user?.profile.avatarUrl} />
+            <ProfileAvatar avatarUrl={user?.profile?.avatarUrl} />
           ) : (
             <NavDropdownMenu open={menu} setOpen={setMenu} />
           )}

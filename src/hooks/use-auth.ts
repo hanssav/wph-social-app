@@ -5,6 +5,11 @@ import { logout, setLoading, setUser } from '@/store/slices/auth-slice';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
+export const meKeys = {
+  me: ['auth', 'me'] as const,
+  posts: (params?: any) => ['me', 'posts', params] as const,
+};
+
 export const useAuth = () => {
   const dispatch = useAppDispatch();
   const { token, user, isAuthenticated, isLoading } = useAppSelector(
@@ -16,7 +21,7 @@ export const useAuth = () => {
     isLoading: isFetching,
     error,
   } = useQuery({
-    queryKey: ['auth', 'me'],
+    queryKey: meKeys.me,
     queryFn: meServices.me,
     enabled: !!token && !user,
     retry: false,
@@ -25,7 +30,10 @@ export const useAuth = () => {
 
   React.useEffect(() => {
     if (data?.data) {
-      dispatch(setUser(data.data));
+      // Only dispatch if data is in correct format (nested with profile and stats)
+      if (data.data.profile && data.data.stats) {
+        dispatch(setUser(data.data));
+      }
     }
   }, [data, dispatch]);
 

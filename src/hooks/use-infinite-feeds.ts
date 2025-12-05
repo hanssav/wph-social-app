@@ -1,4 +1,4 @@
-import { feedService } from '@/services/feed.services';
+import { feedService } from '@/services/feed.service';
 import { FeedResponse, GetFeedParams } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { undefined } from 'zod';

@@ -5,7 +5,7 @@ import {
   UserInfoContent,
   UserInfoTitle,
   UserInfoSubTitle,
-} from '../card/feed-card-user-info';
+} from '../../../container/user-info';
 import {
   useFollowMutation,
   useUnfollowMutation,

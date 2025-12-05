@@ -10,7 +10,7 @@ import {
   UserInfoContent,
   UserInfoSubTitle,
   UserInfoTitle,
-} from './feed-card-user-info';
+} from '../../../container/user-info';
 import { useFeedActions } from '@/hooks';
 import { ExpandableText } from '@/components/container';
 import { ModalCommentContent } from '../modal/modal-comment-content';

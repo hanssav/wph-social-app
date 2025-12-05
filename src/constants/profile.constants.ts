@@ -1,3 +1,4 @@
+import { FormFieldType } from '@/types';
 import { PATH } from './path.constants';
 
 export type EmptyPostState = {
@@ -20,3 +21,42 @@ export const EMPTY_SAVED_STATE: EmptyPostState = {
   label: 'Explore',
   action: PATH.FEED,
 };
+
+export const profileFormFields: FormFieldType[] = [
+  {
+    name: 'name',
+    label: 'Name',
+    type: 'text',
+    placeholder: 'Enter your full name',
+    autoComplete: 'name',
+  },
+  {
+    name: 'username',
+    label: 'Username',
+    type: 'text',
+    placeholder: 'Choose a username',
+    autoComplete: 'username',
+  },
+  {
+    name: 'email',
+    label: 'Email',
+    disabled: true,
+    type: 'email',
+    placeholder: 'you@example.com',
+    autoComplete: 'email',
+  },
+  {
+    name: 'phone',
+    label: 'Phone Number',
+    type: 'text',
+    placeholder: 'e.g. 081234567890',
+    autoComplete: 'tel',
+  },
+  {
+    name: 'bio',
+    label: 'Bio',
+    type: 'textarea',
+    placeholder: 'Creeate your bio',
+    autoComplete: 'off',
+  },
+];

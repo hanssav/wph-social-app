@@ -5,7 +5,7 @@ import {
   UserInfoContent,
   UserInfoTitle,
   UserInfoSubTitle,
-} from '@/components/pages/feed/card/feed-card-user-info';
+} from '@/components/container/user-info';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { RootState } from '@/store';

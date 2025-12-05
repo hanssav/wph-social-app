@@ -16,7 +16,7 @@ import {
   UserInfoContent,
   UserInfoTitle,
   UserInfoSubTitle,
-} from '@/components/pages/feed/card/feed-card-user-info';
+} from '@/components/container/user-info';
 import Spin from '@/components/ui/spin';
 
 type NavSearchBarProps = {

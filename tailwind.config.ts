@@ -49,6 +49,14 @@ export default {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'container-360',
+    'container-452',
+    'container-600',
+    'container-800',
+    'container-812',
+    'container-1200',
+  ],
   theme: {
     extend: {
       keyframes: {
@@ -68,4 +76,4 @@ export default {
     },
   },
   plugins: [customTextPlugin],
-} satisfies Config;
+} as Config;

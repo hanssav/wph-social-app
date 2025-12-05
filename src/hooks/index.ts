@@ -10,3 +10,6 @@ export * from './use-follow';
 export * from './use-search-users';
 export * from './use-nav-search';
 export * from './use-profile-post';
+export * from './use-update-profile';
+export * from './use-avatar-upload';
+export * from './use-update-profile-form';
