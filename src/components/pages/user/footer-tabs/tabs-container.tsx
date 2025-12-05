@@ -1,5 +1,6 @@
 import { FooterTabsType } from '@/constants/footer.constants';
 import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
 import { ComponentProps } from 'react';
 
 const TabsContainer = ({ className, ...props }: ComponentProps<'footer'>) => {
@@ -22,16 +23,18 @@ const TabContainerItem = ({
   className,
   label,
   action,
-  id,
-  activeTabs,
+  onClick,
   type,
 }: TabContainerItemProps) => {
+  const pathname = usePathname();
+
   const Icon = icon;
-  const isActive = activeTabs === id;
+  const isActive = pathname === action;
   const isAdd = type === 'add';
 
   return (
     <div
+      onClick={onClick}
       className={cn(
         'space-y-1 flex-col-center',
         isAdd &&
@@ -42,7 +45,7 @@ const TabContainerItem = ({
       <Icon
         className={cn(
           'size-5 md:size-6',
-          isActive ? 'fill-primary-200' : 'fill-neutral-25',
+          isActive ? 'fill-primary-200 stroke-primary-200' : 'fill-neutral-25',
           isAdd && 'fill-neutral-25'
         )}
       />

@@ -1,5 +1,3 @@
-import { commentService } from '@/services';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   UserInfo,
   UserInfoAvatar,
@@ -10,7 +8,7 @@ import {
 import dayjs from 'dayjs';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Bookmark, Smile } from 'lucide-react';
+import { Smile } from 'lucide-react';
 import Image from 'next/image';
 import { Post } from '@/types';
 import Spin from '@/components/ui/spin';

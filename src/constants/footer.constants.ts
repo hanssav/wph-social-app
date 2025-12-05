@@ -21,8 +21,7 @@ export const FOOTER_DATA: FooterTabsType[] = [
     icon: Plus,
     id: 'plus',
     type: 'add',
-    // label: 'Home',
-    // action: PATH.FEED,
+    action: PATH.FORM.ADD_POST,
   },
   {
     icon: User,
