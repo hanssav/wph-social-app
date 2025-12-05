@@ -96,7 +96,13 @@ export const NavSearchBar: React.FC<NavSearchBarProps> = ({
         </PopoverTrigger>
 
         <PopoverContent
-          className='w-screen md:w-[var(--radix-popover-trigger-width)] h-[90vh] md:h-auto md:max-h-[60vh] p-0 rounded-t-3xl md:rounded-[20px] border-0 md:border'
+          className={cn(
+            'w-screen md:w-[var(--radix-popover-trigger-width)]',
+            'h-[100vh] md:h-auto md:max-h-[60vh]',
+            'p-0 rounded-t-3xl md:rounded-[20px]',
+            'border-0 border-neutral-900 md:border',
+            'bg-neutral-950'
+          )}
           align='start'
           side='bottom'
           onOpenAutoFocus={(e) => e.preventDefault()}
@@ -106,8 +112,9 @@ export const NavSearchBar: React.FC<NavSearchBarProps> = ({
               e.preventDefault();
             }
           }}
+          sideOffset={16}
         >
-          <div className='h-full max-h-[90vh] md:max-h-[60vh] overflow-y-auto'>
+          <div className='h-full max-h-[90vh] md:max-h-[60vh] overflow-y-auto '>
             {isLoading ? (
               <div className='flex-center py-12'>
                 <Spin className='h-8 w-8' />

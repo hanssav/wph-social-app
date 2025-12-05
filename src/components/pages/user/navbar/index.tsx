@@ -16,8 +16,13 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false);
   const isLoggedIn = Boolean(token);
 
+  React.useEffect(() => {
+    document.body.classList.toggle('overflow-hidden', isSearchOpen);
+    return () => document.body.classList.remove('overflow-hidden');
+  }, [isSearchOpen]);
+
   return (
-    <NavContainer>
+    <NavContainer className={cn(isSearchOpen && 'bg-neutral-950')}>
       <ImageLogo className={cn(isSearchOpen && 'hidden md:block')} />
 
       <NavSearchBar
