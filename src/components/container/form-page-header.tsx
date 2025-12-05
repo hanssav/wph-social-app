@@ -16,7 +16,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({ onBack, title }) => {
         size='ghost'
         className='flex-center gap-3'
       >
-        <ArrowLeft />
+        <ArrowLeft className='size-5' />
         <h4 className='text-display-xs-bold'>{title}</h4>
       </Button>
     </section>
