@@ -116,9 +116,9 @@ export const ModalCommentContent = ({ post }: Props) => {
           </div>
         </div>
 
-        <div className='absolute bottom-0  w-full mx-0 px-8 backdrop-blur-lg py-2'>
-          <div className='flex-between'>
-            <FeedCardActions>
+        <div className='absolute bottom-0 space-y-2 w-full mx-0 px-8 backdrop-blur-lg py-2'>
+          <div className='flex-between px-1.5'>
+            <FeedCardActions className='invisible md:visible'>
               {iconActions.map(
                 (icon, idx) =>
                   idx < 3 && <FeedCardActionsItem data={icon} key={idx} />
