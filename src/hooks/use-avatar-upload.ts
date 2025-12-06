@@ -2,13 +2,17 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { UpdateProfileRequest } from '@/schema/porfile.schema';
+import { toast } from 'sonner';
 
 interface UseAvatarUploadProps {
   form: UseFormReturn<UpdateProfileRequest>;
   initialAvatarUrl?: string | null;
 }
 
-export const useAvatarUpload = ({ form, initialAvatarUrl }: UseAvatarUploadProps) => {
+export const useAvatarUpload = ({
+  form,
+  initialAvatarUrl,
+}: UseAvatarUploadProps) => {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [avatarPreview, setAvatarPreview] = React.useState<string | null>(null);
 
@@ -38,6 +42,20 @@ export const useAvatarUpload = ({ form, initialAvatarUrl }: UseAvatarUploadProps
 
   const currentAvatarUrl = avatarPreview ?? initialAvatarUrl ?? '';
 
+  const handleAvatarError = (errors: any) => {
+    console.log('Form submission errors:', errors);
+
+    if (errors.avatar?.message) {
+      toast.error(errors.avatar.message);
+      return;
+    }
+
+    const firstError = Object.values(errors)[0] as any;
+    if (firstError?.message) {
+      toast.error(firstError.message);
+    }
+  };
+
   return {
     fileInputRef,
     avatarPreview,
@@ -45,5 +63,6 @@ export const useAvatarUpload = ({ form, initialAvatarUrl }: UseAvatarUploadProps
     handleFileChange,
     handleChangePhotoClick,
     resetPreview,
+    handleAvatarError,
   };
 };

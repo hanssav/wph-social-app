@@ -1,5 +1,5 @@
 import React from 'react';
-import { Control } from 'react-hook-form';
+import { Control, FieldErrors } from 'react-hook-form';
 import { FormFields } from '@/components/container';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -11,6 +11,7 @@ interface ProfileFormSectionProps {
   control: Control<UpdateProfileRequest>;
   onSubmit: (data: UpdateProfileRequest) => void;
   isSubmitting: boolean;
+  handleError: (errors: FieldErrors) => void;
 }
 
 export const ProfileFormSection: React.FC<ProfileFormSectionProps> = ({
@@ -18,20 +19,20 @@ export const ProfileFormSection: React.FC<ProfileFormSectionProps> = ({
   control,
   onSubmit,
   isSubmitting,
+  handleError,
 }) => {
   return (
     <div className='flex-1 w-full'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-4'>
+        <form
+          onSubmit={form.handleSubmit(onSubmit, handleError)}
+          className='w-full space-y-4'
+        >
           {profileFormFields.map((field) => (
             <FormFields key={field.name} control={control} config={field} />
           ))}
 
-          <Button
-            type='submit'
-            className='w-full h-12'
-            disabled={isSubmitting}
-          >
+          <Button type='submit' className='w-full h-12' disabled={isSubmitting}>
             {isSubmitting ? 'Saving...' : 'Save Changes'}
           </Button>
         </form>

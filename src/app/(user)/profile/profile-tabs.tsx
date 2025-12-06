@@ -35,16 +35,16 @@ export const ProfileTabsTrigger = ({
       '[&]:gap-2',
       // Default text color
       '[&]:text-muted-foreground',
-      // Active state - border bottom lebih tebal
+      // Active state - border bottom more bold
       '[&[data-state=active]]:bg-transparent',
       '[&[data-state=active]]:shadow-none',
       '[&[data-state=active]]:border-b-2',
       '[&[data-state=active]]:border-b-neutral-25',
       '[&[data-state=active]]:text-foreground',
-      // Icon fill saat active (selector dari parent ke svg child)
+
       '[&[data-state=active]_svg]:text-neutral-25',
       '[&[data-state=active]_svg]:fill-neutral-25',
-      // Dark mode
+
       'dark:[&[data-state=active]]:bg-transparent',
       'dark:[&[data-state=active]]:border-b-neutral-25',
       'dark:[&[data-state=active]]:text-foreground',

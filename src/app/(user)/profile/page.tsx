@@ -97,7 +97,7 @@ const Profile = () => {
             >
               Edit Profile
             </Button>
-            <Button className='' variant={'outline'}>
+            <Button variant={'outline'}>
               <Send />
             </Button>
           </div>
