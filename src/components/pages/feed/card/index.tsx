@@ -43,7 +43,6 @@ export const FeedCardItem = ({ post }: FeedCardItemProps) => {
       openDialog({
         title: 'Likes',
         content: <ModalLikesContent postId={post.id} />,
-        // className: 'md:max-w-[1200px]',
       });
     },
     onShowComments: () => {

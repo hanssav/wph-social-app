@@ -37,18 +37,24 @@ export const useFeedActions = ({
   onShowShare,
 }: UseFeedActionsProps) => {
   const queryClient = useQueryClient();
-  const { add: saveMutation, remove: unSaveMutation } = useSaveMutation();
+  const { add: saveMutation, remove: unsaveMutation } = useSaveMutation();
 
+  // ====================================
+  // STATE: SAVE (Local optimistic state)
+  // ====================================
   const [save, setSave] = React.useState({
-    value: false,
-    // NO DATA SAVE COUNT FROM API
-    count: 0,
+    value: post?.savedByMe ?? false,
   });
+
+  // ====================================
+  // STATE: LIKE (Local optimistic state)
+  // ====================================
   const [like, setLike] = useState({
     value: post?.likedByMe ?? false,
     count: post?.likeCount ?? 0,
   });
 
+  // Sync like state when post data changes
   React.useEffect(() => {
     setLike({
       value: post?.likedByMe ?? false,
@@ -56,6 +62,17 @@ export const useFeedActions = ({
     });
   }, [post?.likedByMe, post?.likeCount]);
 
+  // Sync save state when post data changes
+  React.useEffect(() => {
+    setSave((prev) => ({
+      ...prev,
+      value: post?.savedByMe ?? false,
+    }));
+  }, [post?.savedByMe]);
+
+  // ====================================
+  // MUTATION: LIKE
+  // ====================================
   const likeMutation = useMutation({
     mutationFn: likeService.add,
     onError: () => {
@@ -92,12 +109,18 @@ export const useFeedActions = ({
     },
   });
 
+  // ====================================
+  // HANDLER: LIKE
+  // ====================================
   const handleLike = () => {
     if (!post?.id) return;
+
+    // Optimistic update
     setLike((prev) => ({
       value: !prev.value,
       count: prev.value ? prev.count - 1 : prev.count + 1,
     }));
+
     if (like.value) {
       delLikeMutation.mutate(post.id);
     } else {
@@ -105,14 +128,40 @@ export const useFeedActions = ({
     }
   };
 
-  // NO DATA SAVE ME FROM API
+  // ====================================
+  // HANDLER: SAVE
+  // ====================================
   const handleSave = () => {
+    if (!post?.id) return;
+
     setSave((prev) => ({
       value: !prev.value,
-      count: prev.count + 1,
     }));
+
+    if (save.value) {
+      unsaveMutation.mutate(post.id, {
+        onError: () => {
+          setSave((prev) => ({
+            ...prev,
+            value: !prev.value,
+          }));
+        },
+      });
+    } else {
+      saveMutation.mutate(post.id, {
+        onError: () => {
+          setSave((prev) => ({
+            ...prev,
+            value: !prev.value,
+          }));
+        },
+      });
+    }
   };
 
+  // ====================================
+  // ICON ACTIONS CONFIG
+  // ====================================
   const FEED_CARD_ICONS: FeedIconAction[] = [
     {
       id: 'like',
@@ -133,7 +182,6 @@ export const useFeedActions = ({
     {
       id: 'share',
       icon: Send,
-      // iconValue: post?.shareCount ?? 0,
       labelValue: post?.shareCount ?? 0,
       onIconAction: onShowShare,
       onLabelAction: onShowShare,
@@ -144,6 +192,7 @@ export const useFeedActions = ({
       iconValue: save.value,
       onIconAction: handleSave,
       onLabelAction: () => {},
+      isLoading: saveMutation.isPending || unsaveMutation.isPending,
     },
   ];
 

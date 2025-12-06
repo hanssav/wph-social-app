@@ -21,7 +21,9 @@ export const useAddPost = () => {
     onSuccess: () => {
       toast.success('Post created successfully!');
 
-      queryClient.invalidateQueries({ queryKey: ['posts'] });
+      queryClient.invalidateQueries({ queryKey: ['feeds'] });
+      queryClient.invalidateQueries({ queryKey: ['me-posts'] });
+      queryClient.invalidateQueries({ queryKey: ['me-saved', 'posts'] });
       queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
       queryClient.invalidateQueries({ queryKey: ['user', 'posts'] });
     },

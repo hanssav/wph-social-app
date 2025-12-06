@@ -9,6 +9,9 @@ export const useSaveMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['feeds'] });
       queryClient.invalidateQueries({ queryKey: ['comments'] });
+      queryClient.invalidateQueries({
+        queryKey: ['me-saved', 'posts'],
+      });
     },
   });
 
@@ -17,6 +20,9 @@ export const useSaveMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['feeds'] });
       queryClient.invalidateQueries({ queryKey: ['comments'] });
+      queryClient.invalidateQueries({
+        queryKey: ['me-saved', 'posts'],
+      });
     },
   });
 

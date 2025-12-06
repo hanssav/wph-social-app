@@ -24,7 +24,8 @@ export type Post = {
   likeCount: number;
   commentCount: number;
   likedByMe: boolean;
-  shareCount: number;
+  savedByMe: boolean; // not include in backend, Assuming API returns this
+  shareCount: number; // not include in backend, Assuming API returns this
 };
 
 export type CreatePostResponse = ApiResponse<Post>;
