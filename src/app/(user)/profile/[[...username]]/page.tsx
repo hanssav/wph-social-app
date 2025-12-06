@@ -25,13 +25,19 @@ import {
   EMPTY_POST_STATE,
   EMPTY_SAVED_STATE,
 } from '@/constants/profile.constants';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { PATH } from '@/constants';
 
 const Profile = () => {
   const router = useRouter();
   const { user, isLoading } = useAppSelector((state: RootState) => state.auth);
   const { profile, stats } = user ?? {};
+
+  const params = useParams();
+  const username = params.username?.[0];
+  console.log(username, 'username');
+
+  const isOwnProfile = !username;
 
   // =============================
   // NOTE: NEED TO ADD INFINITE SCROLL
@@ -90,13 +96,17 @@ const Profile = () => {
             </UserInfoContent>
           </UserInfo>
           <div className='flex-center gap-3'>
-            <Button
-              onClick={() => router.push(PATH.FORM.UPDATE_PROFILE)}
-              variant='outline'
-              className='flex-1'
-            >
-              Edit Profile
-            </Button>
+            {isOwnProfile ? (
+              <Button
+                onClick={() => router.push(PATH.FORM.UPDATE_PROFILE)}
+                variant='outline'
+                className='flex-1'
+              >
+                Edit Profile
+              </Button>
+            ) : (
+              <Button variant={'outline'}>Follow</Button>
+            )}
             <Button variant={'outline'}>
               <Send />
             </Button>

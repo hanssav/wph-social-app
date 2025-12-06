@@ -1,13 +1,5 @@
 import { ApiSuccess } from './api.types';
-
-export type User = {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-  avatarUrl: string | null;
-};
+import { User } from './user.types';
 
 export type JwtToken = string;
 

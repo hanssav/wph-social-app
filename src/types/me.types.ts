@@ -1,6 +1,6 @@
 import { ApiResponse, ApiSuccess } from './api.types';
-import { User } from './auth.types';
 import { Post } from './post.types';
+import { User } from './user.types';
 
 export type UserProfile = User & {
   bio: string | null;

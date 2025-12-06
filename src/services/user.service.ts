@@ -1,5 +1,10 @@
 import { apiInstance } from '@/api';
-import { SearchUserParams, SearchUserResponse } from '@/types';
+import {
+  GetPostsByUsernameParams,
+  GetPostsByUsernameResponse,
+  SearchUserParams,
+  SearchUserResponse,
+} from '@/types';
 
 export const userService = {
   search: async (params: SearchUserParams) => {
@@ -10,6 +15,15 @@ export const userService = {
       }
     );
 
+    return data;
+  },
+
+  getPostByUsername: async (
+    params: GetPostsByUsernameParams
+  ): Promise<GetPostsByUsernameResponse> => {
+    const { data } = await apiInstance.get(`/users/${params.username}/posts`, {
+      params,
+    });
     return data;
   },
 };
