@@ -1,17 +1,10 @@
 import { ApiResponse, ApiSuccess } from './api.types';
 import { Post } from './post.types';
-import { User } from './user.types';
+import { User, UserStats } from './user.types';
 
 export type UserProfile = User & {
   bio: string | null;
   createdAt: string; // ISO date string
-};
-
-export type UserStats = {
-  posts: number;
-  followers: number;
-  following: number;
-  likes: number;
 };
 
 export type MePayload = {

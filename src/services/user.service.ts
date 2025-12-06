@@ -2,6 +2,8 @@ import { apiInstance } from '@/api';
 import {
   GetPostsByUsernameParams,
   GetPostsByUsernameResponse,
+  GetUsernameParams,
+  GetUsernameResponse,
   SearchUserParams,
   SearchUserResponse,
 } from '@/types';
@@ -14,6 +16,14 @@ export const userService = {
         params,
       }
     );
+
+    return data;
+  },
+
+  getUser: async (params: GetUsernameParams): Promise<GetUsernameResponse> => {
+    const { data } = await apiInstance.get(`/users/${params.username}`, {
+      params,
+    });
 
     return data;
   },

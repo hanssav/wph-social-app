@@ -10,6 +10,13 @@ export type User = {
   avatarUrl: string | null;
 };
 
+export type UserStats = {
+  posts: number;
+  followers: number;
+  following: number;
+  likes: number;
+};
+
 export type SearchUserParams = {
   q: string; // keyword (required)
   page?: number; // optional
@@ -21,12 +28,25 @@ export type SearchUserResponse = ApiSuccess<{
   pagination: Pagination;
 }>;
 
+type Username = string;
+
+// ==================================
+// GET USER BY USERNAME
+// ==================================
+export type GetUsernameParams = { username: Username };
+
+export type UserWithStats = { counts: UserStats; bio: string } & User;
+
+export type GetUsernameResponse = ApiResponse<UserWithStats>;
 // ==================================
 // GET POST FROM OTHERS BY USERNAME
 // ==================================
 
 export type GetPostsByUsernameParams = {
-  username: string;
+  username?: Username;
 } & Partial<Pagination>;
 
-export type GetPostsByUsernameResponse = ApiResponse<{ posts: Post[] }>;
+export type GetPostsByUsernameResponse = ApiResponse<{
+  posts: Post[];
+  pagination: Pagination;
+}>;

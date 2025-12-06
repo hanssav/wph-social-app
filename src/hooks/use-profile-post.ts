@@ -1,14 +1,33 @@
 import { meServices, savedService } from '@/services';
-import { GetPostMeResponse, GetSavedResponse, Pagination } from '@/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { userService } from '@/services/user.service';
+import {
+  GetPostMeResponse,
+  GetPostsByUsernameParams,
+  GetPostsByUsernameResponse,
+  GetSavedResponse,
+  GetUsernameParams,
+  Pagination,
+} from '@/types';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+
+export const userKeys = {
+  getUserByUsername: (params: { username: string }) =>
+    ['users', params] as const,
+  inifiniteUseranmePosts: (params: GetPostsByUsernameParams) =>
+    ['username-posts', 'posts', params] as const,
+  mePosts: (initialParams?: Partial<Pagination>) =>
+    ['me-posts', initialParams] as const,
+  savedPosts: (initialParams?: Partial<Pagination>) =>
+    ['me-saved', 'posts', initialParams] as const,
+};
 
 export const useInfiniteMePosts = (initialParams?: Partial<Pagination>) => {
-  return useInfiniteQuery({
-    queryKey: ['me-posts', initialParams],
+  return useInfiniteQuery<GetPostMeResponse>({
+    queryKey: userKeys.mePosts(initialParams),
     queryFn: ({ pageParam }) =>
       meServices.mePost({
         ...initialParams,
-        page: pageParam,
+        page: Number(pageParam),
         limit: initialParams?.limit || 10,
       }),
     getNextPageParam: (lastPage, allPages) => {
@@ -29,7 +48,7 @@ export const useInfiniteMePosts = (initialParams?: Partial<Pagination>) => {
 
 export const useInfiniteSavedPosts = (initialParams?: Partial<Pagination>) => {
   return useInfiniteQuery<GetSavedResponse>({
-    queryKey: ['me-saved', 'posts', initialParams],
+    queryKey: userKeys.savedPosts(initialParams),
     queryFn: ({ pageParam = 1 }) =>
       savedService.getSaved({
         ...initialParams,
@@ -49,5 +68,37 @@ export const useInfiniteSavedPosts = (initialParams?: Partial<Pagination>) => {
       return allPages.length + 1;
     },
     initialPageParam: 1,
+  });
+};
+
+export const useInfiniteUsernamePosts = (params: GetPostsByUsernameParams) => {
+  return useInfiniteQuery<GetPostsByUsernameResponse>({
+    queryKey: userKeys.inifiniteUseranmePosts(params),
+    initialPageParam: 1,
+    queryFn: ({ pageParam = 1 }) => {
+      return userService.getPostByUsername({
+        ...params,
+        page: Number(pageParam),
+        username: params?.username ?? '',
+      });
+    },
+    getNextPageParam: (lastPage) => {
+      if (!lastPage.success || !lastPage.data?.pagination) {
+        return undefined;
+      }
+      const { page, totalPages } = lastPage.data?.pagination;
+
+      return page < totalPages ? page + 1 : undefined;
+    },
+
+    enabled: !!params?.username,
+  });
+};
+
+export const useGetUserByUsername = (params: GetUsernameParams) => {
+  return useQuery({
+    queryKey: userKeys.getUserByUsername(params),
+    queryFn: () => userService.getUser(params),
+    enabled: !!params.username,
   });
 };

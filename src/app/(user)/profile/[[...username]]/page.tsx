@@ -10,14 +10,16 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { RootState } from '@/store';
 import { useAppSelector } from '@/store/hooks';
-import { Bookmark, LayoutDashboardIcon, Send } from 'lucide-react';
+import { Bookmark, Heart, LayoutDashboardIcon, Send } from 'lucide-react';
 import { ProfileStats, ProfileStatsItem } from './profile-stats';
 import Spin from '@/components/ui/spin';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { ProfileTabList, ProfileTabsTrigger } from './profile-tabs';
 import {
+  useGetUserByUsername,
   useInfiniteMePosts,
   useInfiniteSavedPosts,
+  useInfiniteUsernamePosts,
 } from '@/hooks/use-profile-post';
 import { ProfileImages, ProfileImagesItem } from './profile-images-galery';
 import { ProfileEmptyPost } from './profile-empty-post';
@@ -30,20 +32,33 @@ import { PATH } from '@/constants';
 
 const Profile = () => {
   const router = useRouter();
-  const { user, isLoading } = useAppSelector((state: RootState) => state.auth);
-  const { profile, stats } = user ?? {};
-
   const params = useParams();
-  const username = params.username?.[0];
-  console.log(username, 'username');
-
+  const username = params.username?.[0] ?? '';
   const isOwnProfile = !username;
 
   // =============================
-  // NOTE: NEED TO ADD INFINITE SCROLL
+  // NOTE: USER PROFILE
   // =============================
+  const { user, isLoading } = useAppSelector((state: RootState) => state.auth);
+  const { profile: profileMe, stats } = user ?? {};
+
+  const { data: profileUsername } = useGetUserByUsername({ username });
+  const othersProfile = profileUsername?.data;
+
+  // =============================
+  // NOTE: USER POSTS BY USERNAME
+  // =============================
+
+  const { data: usernamePostsDatas } = useInfiniteUsernamePosts({ username });
+  const postsUsername = usernamePostsDatas?.pages.flatMap(
+    (page) => page.data?.posts
+  );
+
+  // =================================
+  // NOTE: NEED TO ADD INFINITE SCROLL
+  // =================================
   const {
-    data: postDatas,
+    data: postsMeDatas,
     fetchNextPage: fetchNextPosts,
     hasNextPage: hasNextPosts,
     isFetchingNextPage: isFetchingNextPosts,
@@ -52,10 +67,10 @@ const Profile = () => {
     error: postsErrObject,
   } = useInfiniteMePosts({ limit: 10 });
 
-  const posts = postDatas?.pages.flatMap((page) => page.data?.items);
+  const postsMe = postsMeDatas?.pages.flatMap((page) => page.data?.items);
 
   const {
-    data: saveDatas,
+    data: savedMeDatas,
     fetchNextPage: fetchNextSaved,
     hasNextPage: hasNextSaved,
     isFetchingNextPage: isFetchingNextSaved,
@@ -64,12 +79,19 @@ const Profile = () => {
     error: savedErrObject,
   } = useInfiniteSavedPosts({ limit: 10 });
 
-  const saved = saveDatas?.pages.flatMap((page) => page.data?.posts);
+  const savedMe = savedMeDatas?.pages.flatMap((page) => page.data?.posts);
+
+  // =================================
+  // NOTE: RESULTS
+  // =================================
+  const profile = isOwnProfile ? profileMe : othersProfile;
+  const posts = isOwnProfile ? postsMe : postsUsername;
+  const saved = savedMe;
 
   if (isLoading) {
     return (
       <div className='flex-1 h-full w-full'>
-        <Spin></Spin>
+        <Spin />
       </div>
     );
   }
@@ -130,8 +152,11 @@ const Profile = () => {
           <ProfileTabsTrigger value='gallery' icon={LayoutDashboardIcon}>
             Galery
           </ProfileTabsTrigger>
-          <ProfileTabsTrigger value='saved' icon={Bookmark}>
-            Saved
+          <ProfileTabsTrigger
+            value={isOwnProfile ? 'saved' : 'liked'}
+            icon={isOwnProfile ? Bookmark : Heart}
+          >
+            {isOwnProfile ? 'Saved' : 'Liked'}
           </ProfileTabsTrigger>
         </ProfileTabList>
 
@@ -153,7 +178,7 @@ const Profile = () => {
           </TabsContent>
         </TabsContent>
 
-        <TabsContent value='saved'>
+        <TabsContent value={isOwnProfile ? 'saved' : 'liked'}>
           {saved && saved.length > 0 ? (
             <ProfileImages>
               {saved.map((save) => (

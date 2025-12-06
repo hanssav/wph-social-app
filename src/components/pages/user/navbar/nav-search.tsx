@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { useNavSearch } from '@/hooks';
+import { useNavSearch, userKeys } from '@/hooks';
 import type { ComponentProps } from 'react';
 import type { User } from '@/types';
 import {
@@ -18,6 +18,10 @@ import {
   UserInfoSubTitle,
 } from '@/components/container/user-info';
 import Spin from '@/components/ui/spin';
+import { useQueryClient } from '@tanstack/react-query';
+import { userService } from '@/services/user.service';
+import { useRouter } from 'next/navigation';
+import { PATH } from '@/constants';
 
 type NavSearchBarProps = {
   isLoggedIn?: boolean;
@@ -33,6 +37,9 @@ export const NavSearchBar: React.FC<NavSearchBarProps> = ({
   onSelectUser,
   ...props
 }) => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
   const {
     search,
     users,
@@ -51,6 +58,23 @@ export const NavSearchBar: React.FC<NavSearchBarProps> = ({
   });
 
   if (!isLoggedIn && !isSearchOpen) return null;
+
+  const handleHoverAvatar = async (username: string) => {
+    await queryClient.prefetchQuery({
+      queryKey: userKeys.getUserByUsername({ username }),
+      queryFn: () => userService.getUser({ username }),
+    });
+
+    await queryClient.prefetchInfiniteQuery({
+      queryKey: userKeys.inifiniteUseranmePosts({ username }),
+      initialPageParam: 1,
+      queryFn: () => userService.getPostByUsername({ username }),
+    });
+  };
+
+  const handleClickAvatar = (username: string) => {
+    router.push(`${PATH.PROFILE}/${username}`);
+  };
 
   return (
     <div
@@ -135,7 +159,11 @@ export const NavSearchBar: React.FC<NavSearchBarProps> = ({
                     onClick={() => onSelect(user)}
                     className='cursor-pointer hover:bg-accent rounded-md p-2 transition-colors'
                   >
-                    <UserInfo className='w-full'>
+                    <UserInfo
+                      className='w-full'
+                      onClick={() => handleClickAvatar(user.username)}
+                      onMouseEnter={() => handleHoverAvatar(user.username)}
+                    >
                       <UserInfoAvatar
                         src={user.avatarUrl ?? ''}
                         alt={user.name}
