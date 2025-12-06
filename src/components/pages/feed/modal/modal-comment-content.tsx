@@ -50,7 +50,7 @@ export const ModalCommentContent = ({ post }: Props) => {
         <Image
           fill
           src={post.imageUrl}
-          alt={post.caption}
+          alt={post.caption || `Post ${post.id} by ${post.author.username}`}
           loading='eager'
           sizes='100vh'
           className='object-cover'

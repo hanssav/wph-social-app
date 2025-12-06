@@ -31,6 +31,7 @@ import {
 import { ProfileImages, ProfileImagesItem } from './profile-images-galery';
 import { ProfileEmptyPost } from './profile-empty-post';
 import {
+  EMPTY_OTHERS_POST,
   EMPTY_POST_STATE,
   EMPTY_SAVED_STATE,
 } from '@/constants/profile.constants';
@@ -105,6 +106,8 @@ const Profile = () => {
   const posts = isOwnProfile ? postsMe : postsUsername;
   const saved = isOwnProfile ? savedMe : likedPostsByUsername;
   const stats = isOwnProfile ? profileStats : othersStats;
+  const postFallback = isOwnProfile ? EMPTY_POST_STATE : EMPTY_OTHERS_POST;
+  const savedFallback = isOwnProfile ? EMPTY_SAVED_STATE : EMPTY_OTHERS_POST;
 
   const { handleFollowAct, getFollowState } = useFollowAct();
   const isFollowed = getFollowState(othersProfile);
@@ -207,7 +210,7 @@ const Profile = () => {
                 ))}
               </ProfileImages>
             ) : (
-              <ProfileEmptyPost {...EMPTY_POST_STATE} />
+              <ProfileEmptyPost {...postFallback} />
             )}
           </TabsContent>
         </TabsContent>
@@ -224,7 +227,7 @@ const Profile = () => {
               ))}
             </ProfileImages>
           ) : (
-            <ProfileEmptyPost {...EMPTY_SAVED_STATE} />
+            <ProfileEmptyPost {...savedFallback} />
           )}
         </TabsContent>
       </Tabs>

@@ -22,6 +22,13 @@ export const EMPTY_SAVED_STATE: EmptyPostState = {
   action: PATH.FEED,
 };
 
+export const EMPTY_OTHERS_POST: EmptyPostState = {
+  title: 'No Posts Yet',
+  desc: 'This user hasn’t uploaded any photos.',
+  label: 'Go Back',
+  action: PATH.FEED,
+};
+
 export const profileFormFields: FormFieldType[] = [
   {
     name: 'name',
