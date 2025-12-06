@@ -15,6 +15,8 @@ export const userKeys = {
     ['users', params] as const,
   inifiniteUseranmePosts: (params: GetPostsByUsernameParams) =>
     ['username-posts', 'posts', params] as const,
+  inifiniteUseranmeLikedPosts: (params: GetPostsByUsernameParams) =>
+    ['username-liked-posts', 'posts', params] as const,
   mePosts: (initialParams?: Partial<Pagination>) =>
     ['me-posts', initialParams] as const,
   savedPosts: (initialParams?: Partial<Pagination>) =>
@@ -71,12 +73,40 @@ export const useInfiniteSavedPosts = (initialParams?: Partial<Pagination>) => {
   });
 };
 
-export const useInfiniteUsernamePosts = (params: GetPostsByUsernameParams) => {
+export const useInfinitePostsByUsername = (
+  params: GetPostsByUsernameParams
+) => {
   return useInfiniteQuery<GetPostsByUsernameResponse>({
     queryKey: userKeys.inifiniteUseranmePosts(params),
     initialPageParam: 1,
     queryFn: ({ pageParam = 1 }) => {
       return userService.getPostByUsername({
+        ...params,
+        page: Number(pageParam),
+        username: params?.username ?? '',
+      });
+    },
+    getNextPageParam: (lastPage) => {
+      if (!lastPage.success || !lastPage.data?.pagination) {
+        return undefined;
+      }
+      const { page, totalPages } = lastPage.data?.pagination;
+
+      return page < totalPages ? page + 1 : undefined;
+    },
+
+    enabled: !!params?.username,
+  });
+};
+
+export const useInfiniteLikedPostsByUsername = (
+  params: GetPostsByUsernameParams
+) => {
+  return useInfiniteQuery<GetPostsByUsernameResponse>({
+    queryKey: userKeys.inifiniteUseranmePosts(params),
+    initialPageParam: 1,
+    queryFn: ({ pageParam = 1 }) => {
+      return userService.getLikedPostByUsername({
         ...params,
         page: Number(pageParam),
         username: params?.username ?? '',

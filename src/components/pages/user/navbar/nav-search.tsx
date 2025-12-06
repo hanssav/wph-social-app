@@ -143,9 +143,9 @@ export const NavSearchBar: React.FC<NavSearchBarProps> = ({
               <div className='flex-center py-12'>
                 <Spin className='h-8 w-8' />
               </div>
-            ) : search.length < 2 ? (
+            ) : search.length < 1 ? (
               <div className='py-12 text-center text-sm text-neutral-600'>
-                Type at least 2 characters
+                Type at least 1 characters
               </div>
             ) : users.length === 0 ? (
               <div className='py-12 text-center text-sm text-neutral-600'>

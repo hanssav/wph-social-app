@@ -2,14 +2,18 @@ import { userService } from '@/services/user.service';
 import { SearchUserParams, SearchUserResponse } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-export const userKeys = {
+export const userSearchKeys = {
   all: ['users'],
-  search: (params?: SearchUserParams) => [...userKeys.all, 'search', params],
+  search: (params?: SearchUserParams) => [
+    ...userSearchKeys.all,
+    'search',
+    params,
+  ],
 };
 
 export const useSearchUsers = (params: Omit<SearchUserParams, 'page'>) => {
   return useInfiniteQuery<SearchUserResponse>({
-    queryKey: userKeys.search(params),
+    queryKey: userSearchKeys.search(params),
     queryFn: ({ pageParam = 1 }) =>
       userService.search({ ...params, page: Number(pageParam) }),
     initialPageParam: 1,
@@ -17,6 +21,6 @@ export const useSearchUsers = (params: Omit<SearchUserParams, 'page'>) => {
       const { page, totalPages } = lastPage.data.pagination;
       return page < totalPages ? page + 1 : undefined;
     },
-    enabled: !!params.q && params.q.length >= 2,
+    enabled: !!params.q && params.q.length >= 1,
   });
 };

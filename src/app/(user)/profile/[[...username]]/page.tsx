@@ -10,16 +10,23 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { RootState } from '@/store';
 import { useAppSelector } from '@/store/hooks';
-import { Bookmark, Heart, LayoutDashboardIcon, Send } from 'lucide-react';
+import {
+  Bookmark,
+  CircleCheck,
+  Heart,
+  LayoutDashboardIcon,
+  Send,
+} from 'lucide-react';
 import { ProfileStats, ProfileStatsItem } from './profile-stats';
 import Spin from '@/components/ui/spin';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { ProfileTabList, ProfileTabsTrigger } from './profile-tabs';
 import {
   useGetUserByUsername,
+  useInfiniteLikedPostsByUsername,
   useInfiniteMePosts,
+  useInfinitePostsByUsername,
   useInfiniteSavedPosts,
-  useInfiniteUsernamePosts,
 } from '@/hooks/use-profile-post';
 import { ProfileImages, ProfileImagesItem } from './profile-images-galery';
 import { ProfileEmptyPost } from './profile-empty-post';
@@ -29,6 +36,7 @@ import {
 } from '@/constants/profile.constants';
 import { useParams, useRouter } from 'next/navigation';
 import { PATH } from '@/constants';
+import { useFollowAct } from '@/hooks';
 
 const Profile = () => {
   const router = useRouter();
@@ -40,17 +48,26 @@ const Profile = () => {
   // NOTE: USER PROFILE
   // =============================
   const { user, isLoading } = useAppSelector((state: RootState) => state.auth);
-  const { profile: profileMe, stats } = user ?? {};
+  const { profile: profileMe, stats: profileStats } = user ?? {};
 
   const { data: profileUsername } = useGetUserByUsername({ username });
   const othersProfile = profileUsername?.data;
+  const othersStats = othersProfile?.counts;
 
   // =============================
   // NOTE: USER POSTS BY USERNAME
   // =============================
 
-  const { data: usernamePostsDatas } = useInfiniteUsernamePosts({ username });
+  const { data: usernamePostsDatas } = useInfinitePostsByUsername({ username });
   const postsUsername = usernamePostsDatas?.pages.flatMap(
+    (page) => page.data?.posts
+  );
+
+  const { data: usernameLikedPostsDatas } = useInfiniteLikedPostsByUsername({
+    username,
+  });
+
+  const likedPostsByUsername = usernameLikedPostsDatas?.pages.flatMap(
     (page) => page.data?.posts
   );
 
@@ -86,7 +103,11 @@ const Profile = () => {
   // =================================
   const profile = isOwnProfile ? profileMe : othersProfile;
   const posts = isOwnProfile ? postsMe : postsUsername;
-  const saved = savedMe;
+  const saved = isOwnProfile ? savedMe : likedPostsByUsername;
+  const stats = isOwnProfile ? profileStats : othersStats;
+
+  const { handleFollowAct, getFollowState } = useFollowAct();
+  const isFollowed = getFollowState(othersProfile);
 
   if (isLoading) {
     return (
@@ -127,7 +148,20 @@ const Profile = () => {
                 Edit Profile
               </Button>
             ) : (
-              <Button variant={'outline'}>Follow</Button>
+              <Button
+                variant={isFollowed ? 'outline' : 'default'}
+                onClick={() => handleFollowAct(othersProfile)}
+                className='min-w-[127px]'
+              >
+                {isFollowed ? (
+                  <span className='flex-start gap-1.5'>
+                    <CircleCheck className='h-4 w-4' />
+                    <p>Following</p>
+                  </span>
+                ) : (
+                  'Follow'
+                )}
+              </Button>
             )}
             <Button variant={'outline'}>
               <Send />

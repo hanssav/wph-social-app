@@ -1,6 +1,7 @@
 import { followService } from '@/services';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { likeKeys } from './use-like';
+import { userKeys } from './use-profile-post';
 
 type FollowMutationContext = {
   username: string;
@@ -14,6 +15,11 @@ export const useFollowMutation = () => {
     mutationFn: ({ username }: FollowMutationContext) =>
       followService.add(username),
     onSuccess: (_data, { username, postId }) => {
+      const encodedUsername = encodeURIComponent(username);
+      queryClient.invalidateQueries({
+        queryKey: userKeys.getUserByUsername({ username: encodedUsername }),
+      });
+
       queryClient.invalidateQueries({ queryKey: ['feeds'] });
       queryClient.invalidateQueries({
         queryKey: ['user', username],
@@ -39,6 +45,11 @@ export const useUnfollowMutation = () => {
     mutationFn: ({ username }: FollowMutationContext) =>
       followService.remove(username),
     onSuccess: (_data, { username, postId }) => {
+      const encodedUsername = encodeURIComponent(username);
+      queryClient.invalidateQueries({
+        queryKey: userKeys.getUserByUsername({ username: encodedUsername }),
+      });
+
       queryClient.invalidateQueries({ queryKey: ['feeds'] });
       queryClient.invalidateQueries({
         queryKey: ['user', username],

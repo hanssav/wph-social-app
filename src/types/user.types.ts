@@ -35,12 +35,18 @@ type Username = string;
 // ==================================
 export type GetUsernameParams = { username: Username };
 
-export type UserWithStats = { counts: UserStats; bio: string } & User;
+export type UserWithStats = {
+  counts: UserStats;
+  bio: string;
+  isFollowing: boolean;
+  isMe: boolean;
+} & User;
 
 export type GetUsernameResponse = ApiResponse<UserWithStats>;
-// ==================================
-// GET POST FROM OTHERS BY USERNAME
-// ==================================
+
+// ============================================================================
+// GET POST FROM OTHERS BY USERNAME || GET LIKED POST FROM OTHERS BY USERNAME
+// ============================================================================
 
 export type GetPostsByUsernameParams = {
   username?: Username;

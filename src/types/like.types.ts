@@ -1,5 +1,5 @@
 import { ApiResponse, Pagination } from './api.types';
-import { User } from './auth.types';
+import { User } from './user.types';
 
 // ============================
 // ADD like / DELETE like
