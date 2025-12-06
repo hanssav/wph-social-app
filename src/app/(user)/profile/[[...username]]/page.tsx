@@ -17,10 +17,16 @@ import {
   LayoutDashboardIcon,
   Send,
 } from 'lucide-react';
-import { ProfileStats, ProfileStatsItem } from './profile-stats';
+import {
+  ProfileStats,
+  ProfileStatsItem,
+} from '@/components/pages/profile/profile-stats';
 import Spin from '@/components/ui/spin';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { ProfileTabList, ProfileTabsTrigger } from './profile-tabs';
+import {
+  ProfileTabList,
+  ProfileTabsTrigger,
+} from '@/components/pages/profile/profile-tabs';
 import {
   useGetUserByUsername,
   useInfiniteLikedPostsByUsername,
@@ -28,8 +34,11 @@ import {
   useInfinitePostsByUsername,
   useInfiniteSavedPosts,
 } from '@/hooks/use-profile-post';
-import { ProfileImages, ProfileImagesItem } from './profile-images-galery';
-import { ProfileEmptyPost } from './profile-empty-post';
+import {
+  ProfileImages,
+  ProfileImagesItem,
+} from '@/components/pages/profile/profile-images-galery';
+import { ProfileEmptyPost } from '@/components/pages/profile/profile-empty-post';
 import {
   EMPTY_OTHERS_POST,
   EMPTY_POST_STATE,
