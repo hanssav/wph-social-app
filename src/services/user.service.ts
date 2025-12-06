@@ -34,6 +34,8 @@ export const userService = {
     const { data } = await apiInstance.get(`/users/${params.username}/posts`, {
       params,
     });
+    console.log(data, 'in liked post ');
+
     return data;
   },
 
@@ -43,6 +45,7 @@ export const userService = {
     const { data } = await apiInstance.get(`/users/${params.username}/likes`, {
       params,
     });
+
     return data;
   },
 };

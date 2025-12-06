@@ -38,6 +38,8 @@ import {
 import { useParams, useRouter } from 'next/navigation';
 import { PATH } from '@/constants';
 import { useFollowAct } from '@/hooks';
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
 
 const Profile = () => {
   const router = useRouter();
@@ -46,26 +48,52 @@ const Profile = () => {
   const isOwnProfile = !username;
 
   // =============================
+  // NOTE: INTERSECTION OBSERVER
+  // =============================
+  const { ref: postsRef, inView: postsInView } = useInView({
+    threshold: 0.1, // Trigger 10% height
+    triggerOnce: false,
+  });
+
+  const { ref: savedRef, inView: savedInView } = useInView({
+    threshold: 0.1,
+    triggerOnce: false,
+  });
+
+  // =============================
   // NOTE: USER PROFILE
   // =============================
   const { user, isLoading } = useAppSelector((state: RootState) => state.auth);
   const { profile: profileMe, stats: profileStats } = user ?? {};
 
-  const { data: profileUsername } = useGetUserByUsername({ username });
+  const { data: profileUsername } = useGetUserByUsername({
+    username,
+  });
   const othersProfile = profileUsername?.data;
   const othersStats = othersProfile?.counts;
 
   // =============================
-  // NOTE: USER POSTS BY USERNAME
+  // NOTE: USER POSTS BY USERNAME (WITH INFINITE SCROLL)
   // =============================
+  const {
+    data: usernamePostsDatas,
+    fetchNextPage: fetchNextUsernamePost,
+    hasNextPage: hasNextUsernamePost,
+    isFetchingNextPage: isFetchingNextUsernamePost,
+  } = useInfinitePostsByUsername({ username, limit: 12 });
 
-  const { data: usernamePostsDatas } = useInfinitePostsByUsername({ username });
   const postsUsername = usernamePostsDatas?.pages.flatMap(
     (page) => page.data?.posts
   );
 
-  const { data: usernameLikedPostsDatas } = useInfiniteLikedPostsByUsername({
+  const {
+    data: usernameLikedPostsDatas,
+    fetchNextPage: fetchNextUsernameLiked,
+    hasNextPage: hasNextUsernameLiked,
+    isFetchingNextPage: isFetchingNextUsernameLiked,
+  } = useInfiniteLikedPostsByUsername({
     username,
+    limit: 12,
   });
 
   const likedPostsByUsername = usernameLikedPostsDatas?.pages.flatMap(
@@ -73,17 +101,14 @@ const Profile = () => {
   );
 
   // =================================
-  // NOTE: NEED TO ADD INFINITE SCROLL
+  // NOTE: OWN PROFILE POSTS (WITH INFINITE SCROLL)
   // =================================
   const {
     data: postsMeDatas,
     fetchNextPage: fetchNextPosts,
     hasNextPage: hasNextPosts,
     isFetchingNextPage: isFetchingNextPosts,
-    isLoading: postsLoading,
-    isError: postsError,
-    error: postsErrObject,
-  } = useInfiniteMePosts({ limit: 10 });
+  } = useInfiniteMePosts({ limit: 12 });
 
   const postsMe = postsMeDatas?.pages.flatMap((page) => page.data?.items);
 
@@ -92,10 +117,7 @@ const Profile = () => {
     fetchNextPage: fetchNextSaved,
     hasNextPage: hasNextSaved,
     isFetchingNextPage: isFetchingNextSaved,
-    isLoading: savedLoading,
-    isError: savedError,
-    error: savedErrObject,
-  } = useInfiniteSavedPosts({ limit: 10 });
+  } = useInfiniteSavedPosts({ limit: 12 });
 
   const savedMe = savedMeDatas?.pages.flatMap((page) => page.data?.posts);
 
@@ -109,6 +131,58 @@ const Profile = () => {
   const postFallback = isOwnProfile ? EMPTY_POST_STATE : EMPTY_OTHERS_POST;
   const savedFallback = isOwnProfile ? EMPTY_SAVED_STATE : EMPTY_OTHERS_POST;
 
+  // =================================
+  // NOTE: AUTO FETCH WHEN IN VIEW
+  // =================================
+
+  // Auto fetch posts when postsRef is in view
+  useEffect(() => {
+    if (postsInView) {
+      if (isOwnProfile) {
+        if (hasNextPosts && !isFetchingNextPosts) {
+          fetchNextPosts();
+        }
+      } else {
+        if (hasNextUsernamePost && !isFetchingNextUsernamePost) {
+          fetchNextUsernamePost();
+        }
+      }
+    }
+  }, [
+    postsInView,
+    isOwnProfile,
+    hasNextPosts,
+    isFetchingNextPosts,
+    fetchNextPosts,
+    hasNextUsernamePost,
+    isFetchingNextUsernamePost,
+    fetchNextUsernamePost,
+  ]);
+
+  // Auto fetch saved/liked when savedRef is in view
+  useEffect(() => {
+    if (savedInView) {
+      if (isOwnProfile) {
+        if (hasNextSaved && !isFetchingNextSaved) {
+          fetchNextSaved();
+        }
+      } else {
+        if (hasNextUsernameLiked && !isFetchingNextUsernameLiked) {
+          fetchNextUsernameLiked();
+        }
+      }
+    }
+  }, [
+    savedInView,
+    isOwnProfile,
+    hasNextSaved,
+    isFetchingNextSaved,
+    fetchNextSaved,
+    hasNextUsernameLiked,
+    isFetchingNextUsernameLiked,
+    fetchNextUsernameLiked,
+  ]);
+
   const { handleFollowAct, getFollowState } = useFollowAct();
   const isFollowed = getFollowState(othersProfile);
 
@@ -119,6 +193,13 @@ const Profile = () => {
       </div>
     );
   }
+
+  const isFetchingGallery = isOwnProfile
+    ? isFetchingNextPosts
+    : isFetchingNextUsernamePost;
+  const isFetchingSaved = isOwnProfile
+    ? isFetchingNextSaved
+    : isFetchingNextUsernameLiked;
 
   return (
     <div className='container-812 space-y-4'>
@@ -183,11 +264,10 @@ const Profile = () => {
       </section>
 
       {/* SECTION TAB AND POST LIST */}
-
       <Tabs defaultValue='gallery' className='gap-6'>
         <ProfileTabList>
           <ProfileTabsTrigger value='gallery' icon={LayoutDashboardIcon}>
-            Galery
+            Gallery
           </ProfileTabsTrigger>
           <ProfileTabsTrigger
             value={isOwnProfile ? 'saved' : 'liked'}
@@ -197,35 +277,47 @@ const Profile = () => {
           </ProfileTabsTrigger>
         </ProfileTabList>
 
+        {/* GALLERY TAB */}
         <TabsContent value='gallery'>
-          <TabsContent value='gallery'>
-            {posts && posts.length > 0 ? (
+          {posts && posts.length > 0 ? (
+            <>
               <ProfileImages>
                 {posts.map((post) => (
                   <ProfileImagesItem
                     key={post?.id}
                     src={post?.imageUrl ?? ''}
-                    alt={post?.caption ?? ''}
+                    alt={post?.caption ?? `Post by ${profile?.username}`}
                   />
                 ))}
               </ProfileImages>
-            ) : (
-              <ProfileEmptyPost {...postFallback} />
-            )}
-          </TabsContent>
+
+              <div ref={postsRef} className='h-20 flex-center'>
+                {isFetchingGallery && <Spin />}
+              </div>
+            </>
+          ) : (
+            <ProfileEmptyPost {...postFallback} />
+          )}
         </TabsContent>
 
+        {/* SAVED/LIKED TAB */}
         <TabsContent value={isOwnProfile ? 'saved' : 'liked'}>
           {saved && saved.length > 0 ? (
-            <ProfileImages>
-              {saved.map((save) => (
-                <ProfileImagesItem
-                  key={save?.id}
-                  src={save?.imageUrl ?? ''}
-                  alt={save?.caption ?? ''}
-                />
-              ))}
-            </ProfileImages>
+            <>
+              <ProfileImages>
+                {saved.map((save) => (
+                  <ProfileImagesItem
+                    key={save?.id}
+                    src={save?.imageUrl ?? ''}
+                    alt={save?.caption ?? `Post by ${profile?.username}`}
+                  />
+                ))}
+              </ProfileImages>
+
+              <div ref={savedRef} className='h-20 flex-center'>
+                {isFetchingSaved && <Spin />}
+              </div>
+            </>
           ) : (
             <ProfileEmptyPost {...savedFallback} />
           )}
