@@ -12,7 +12,7 @@ export const loginFields: FormFieldType[] = [
   {
     name: 'password',
     label: 'Password',
-    autoComplete: 'Password',
+    autoComplete: 'current-password',
     placeholder: 'Enter your password',
     type: 'password',
   },
@@ -70,7 +70,7 @@ export const registerFields: FormFieldType[] = [
     name: 'phone',
     label: 'Number Phone',
     placeholder: 'Enter your number phone',
-    type: 'number',
+    type: 'tel',
     autoComplete: 'tel',
   },
   {
