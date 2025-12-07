@@ -106,7 +106,6 @@ export const useInfiniteLikedPostsByUsername = (
     queryKey: userKeys.inifiniteUseranmePosts(params),
     initialPageParam: 1,
     queryFn: ({ pageParam = 1 }) => {
-      console.log('hook liked post in here');
       return userService.getLikedPostByUsername({
         ...params,
         page: Number(pageParam),

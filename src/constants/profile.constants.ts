@@ -6,6 +6,7 @@ export type EmptyPostState = {
   desc: string;
   label: string;
   action: string;
+  type?: 'back' | undefined;
 };
 
 export const EMPTY_POST_STATE: EmptyPostState = {
@@ -26,6 +27,7 @@ export const EMPTY_OTHERS_POST: EmptyPostState = {
   title: 'No Posts Yet',
   desc: 'This user hasn’t uploaded any photos.',
   label: 'Go Back',
+  type: 'back',
   action: PATH.FEED,
 };
 

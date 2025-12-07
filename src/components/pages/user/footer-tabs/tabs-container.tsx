@@ -57,7 +57,7 @@ const TabContainerItem = ({
             : 'text-neutral-25 font-medium'
         )}
       >
-        {label}
+        {!isAdd && label}
       </p>
     </div>
   );

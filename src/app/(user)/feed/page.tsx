@@ -1,4 +1,5 @@
 'use client';
+
 import { FeedCardItem, FeedCards } from '@/components/pages/feed/card';
 import Spin from '@/components/ui/spin';
 import { useInfiniteFeeds } from '@/hooks';
@@ -6,30 +7,51 @@ import React from 'react';
 import { useInView } from 'react-intersection-observer';
 
 const FeedPage = () => {
-  const { data, isFetchingNextPage, hasNextPage, fetchNextPage } =
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteFeeds({ limit: 20 });
+
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: false,
   });
 
-  const feeds = data?.pages.flatMap((feed) => feed.data?.items ?? []) ?? [];
+  const feeds = data?.pages.flatMap((page) => page.data?.items ?? []) ?? [];
 
   React.useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, isFetchingNextPage]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
     <div className='container-600'>
       <FeedCards>
-        {feeds?.map((feed) => (
-          <FeedCardItem key={feed?.id} post={feed} />
-        ))}
-        <div ref={ref} className='h-20 flex-center'>
-          {isFetchingNextPage && <Spin />}
-        </div>
+        {feeds.length > 0 ? (
+          <>
+            {feeds.map((feed) => (
+              <FeedCardItem key={feed.id} post={feed} />
+            ))}
+
+            <div ref={ref} className='h-20 flex-center'>
+              {(isFetchingNextPage || isLoading) && <Spin />}
+              {!hasNextPage && feeds.length > 0 && (
+                <p className='text-neutral-600 text-sm'>
+                  You're all caught up!
+                </p>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className='py-20 px-6 text-center'>
+            <div className='mx-auto w-32 h-32 mb-6 opacity-50'></div>
+            <h3 className='text-xl font-semibold text-neutral-25 mb-2'>
+              No posts yet
+            </h3>
+            <p className='text-neutral-600'>
+              Follow someone or create your first post
+            </p>
+          </div>
+        )}
       </FeedCards>
     </div>
   );
