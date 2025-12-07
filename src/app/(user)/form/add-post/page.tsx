@@ -26,14 +26,14 @@ const AddPost = () => {
       caption: caption.trim() || undefined,
     };
 
+    router.push(PATH.FEED);
+
     addPost(newPost, {
       onSuccess: () => {
         setFile(null);
         setCaption('');
       },
     });
-
-    router.push(PATH.FEED);
   };
 
   return (
