@@ -77,8 +77,17 @@ export const useCommentWithActions = ({
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['comments', postId] });
-      queryClient.invalidateQueries({ queryKey: feedKeys.all() });
+      queryClient.invalidateQueries({
+        queryKey: ['comments', postId],
+        exact: false,
+        refetchType: 'all',
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ['feeds'],
+        exact: false,
+        refetchType: 'active',
+      });
       setCommentText('');
     },
   });

@@ -29,14 +29,12 @@ export const useLogin = () => {
     onSuccess: async (data) => {
       dispatch(setToken(data.data.token));
 
-      await new Promise((resolve) => setTimeout(resolve, 200));
-
       try {
         queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
-        toast.success('Login Successful!');
 
         // window.location.href = PATH.FEED;
         router.push(PATH.FEED);
+        toast.success('Login Successful!');
         // router.refresh();
       } catch (error) {
         toast.error(getErrorMessage(error));

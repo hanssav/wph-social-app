@@ -11,10 +11,9 @@ export const useLogout = () => {
   const queryClient = useQueryClient();
 
   const handleLogout = () => {
-    dispatch(logout());
-
-    queryClient.clear();
     router.push(PATH.LOGIN);
+    dispatch(logout());
+    queryClient.clear();
   };
 
   return { logout: handleLogout };
