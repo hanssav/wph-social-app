@@ -1,5 +1,6 @@
 export const IMAGES = {
   LOGO: '/images/logo.png',
+  BG_AUTH: '/images/gradient.png',
 };
 
 export const coverImage =
