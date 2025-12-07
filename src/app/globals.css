@@ -346,3 +346,18 @@
 @utility container-1200 {
   @apply max-w-[1200px] mx-auto my-0 px-4;
 }
+
+[data-sonner-toast][data-type='success'],
+.sonner-success-toast {
+  background-color: #079455 !important;
+  border-color: #079455 !important;
+  color: white !important;
+}
+
+/* Error Toast */
+[data-sonner-toast][data-type='error'],
+.sonner-error-toast {
+  background-color: #d9206e !important;
+  border-color: #d9206e !important;
+  color: white !important;
+}

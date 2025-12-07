@@ -6,15 +6,8 @@ import {
   UserInfoTitle,
   UserInfoSubTitle,
 } from '../../../container/user-info';
-import {
-  useFollowMutation,
-  useUnfollowMutation,
-  useGetLikesByPost,
-  useFollowAct,
-} from '@/hooks';
+import { useGetLikesByPost, useFollowAct } from '@/hooks';
 import { CircleCheck } from 'lucide-react';
-import { UserLike } from '@/types';
-import { useState } from 'react';
 
 type ModalLikesContentProps = {
   postId: number;

@@ -29,3 +29,8 @@ export type Post = {
 };
 
 export type CreatePostResponse = ApiResponse<Post>;
+
+export type AddPostReq = {
+  image: File;
+  caption?: string;
+};

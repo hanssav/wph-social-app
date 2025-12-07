@@ -21,20 +21,19 @@ const AddPost = () => {
       setErr('Please select an image');
       return;
     }
+    const newPost = {
+      image: file,
+      caption: caption.trim() || undefined,
+    };
 
-    addPost(
-      {
-        image: file,
-        caption: caption.trim() || undefined,
+    addPost(newPost, {
+      onSuccess: () => {
+        setFile(null);
+        setCaption('');
       },
-      {
-        onSuccess: () => {
-          setFile(null);
-          setCaption('');
-          router.push(PATH.FEED);
-        },
-      }
-    );
+    });
+
+    router.push(PATH.FEED);
   };
 
   return (

@@ -1,7 +1,8 @@
 import { apiInstance } from '@/api';
+import { AddPostReq } from '@/types';
 
 export const postService = {
-  add: async (req: { image: File; caption?: string }) => {
+  add: async (req: AddPostReq) => {
     const formData = new FormData();
     formData.append('image', req.image);
     if (req.caption) {

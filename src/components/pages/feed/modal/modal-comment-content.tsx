@@ -1,10 +1,3 @@
-import {
-  UserInfo,
-  UserInfoAvatar,
-  UserInfoContent,
-  UserInfoTitle,
-  UserInfoSubTitle,
-} from '../../../container/user-info';
 import dayjs from 'dayjs';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -22,6 +15,13 @@ import { useCommentWithActions } from '../hooks/use-comment-with-Actions';
 import { useInputWithEmoji } from '../hooks/use-input-with-emoji';
 import { FeedCardActions, FeedCardActionsItem } from '../card/feed-card.-icons';
 import { useFeedActions } from '@/hooks';
+import {
+  UserInfo,
+  UserInfoAvatar,
+  UserInfoContent,
+  UserInfoTitle,
+  UserInfoSubTitle,
+} from '@/components/container/user-info';
 
 type Props = {
   post: Post;
