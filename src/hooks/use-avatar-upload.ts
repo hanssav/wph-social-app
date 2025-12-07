@@ -43,8 +43,6 @@ export const useAvatarUpload = ({
   const currentAvatarUrl = avatarPreview ?? initialAvatarUrl ?? '';
 
   const handleAvatarError = (errors: any) => {
-    console.log('Form submission errors:', errors);
-
     if (errors.avatar?.message) {
       toast.error(errors.avatar.message);
       return;

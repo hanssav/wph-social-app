@@ -126,7 +126,7 @@ const Profile = () => {
     fetchNextPage: fetchNextSaved,
     hasNextPage: hasNextSaved,
     isFetchingNextPage: isFetchingNextSaved,
-  } = useInfiniteSavedPosts({ limit: 12 });
+  } = useInfiniteSavedPosts({ limit: 12, enabled: isOwnProfile });
 
   const savedMe = savedMeDatas?.pages.flatMap((page) => page.data?.posts);
 
@@ -170,15 +170,15 @@ const Profile = () => {
 
   // Auto fetch saved/liked when savedRef is in view
   useEffect(() => {
-    if (savedInView) {
-      if (isOwnProfile) {
-        if (hasNextSaved && !isFetchingNextSaved) {
-          fetchNextSaved();
-        }
-      } else {
-        if (hasNextUsernameLiked && !isFetchingNextUsernameLiked) {
-          fetchNextUsernameLiked();
-        }
+    if (!savedInView) return;
+
+    if (isOwnProfile) {
+      if (hasNextSaved && !isFetchingNextSaved && fetchNextSaved) {
+        fetchNextSaved();
+      }
+    } else {
+      if (hasNextUsernameLiked && !isFetchingNextUsernameLiked) {
+        fetchNextUsernameLiked();
       }
     }
   }, [

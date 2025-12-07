@@ -7,6 +7,7 @@ import {
   SearchUserParams,
   SearchUserResponse,
 } from '@/types';
+import { is } from 'zod/v4/locales';
 
 export const userService = {
   search: async (params: SearchUserParams) => {
@@ -34,7 +35,6 @@ export const userService = {
     const { data } = await apiInstance.get(`/users/${params.username}/posts`, {
       params,
     });
-    console.log(data, 'in liked post ');
 
     return data;
   },

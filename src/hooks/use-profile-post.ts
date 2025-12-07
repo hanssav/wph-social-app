@@ -47,8 +47,9 @@ export const useInfiniteMePosts = (initialParams?: Partial<Pagination>) => {
     initialPageParam: 1,
   });
 };
-
-export const useInfiniteSavedPosts = (initialParams?: Partial<Pagination>) => {
+export const useInfiniteSavedPosts = (
+  initialParams?: Partial<Pagination> & { enabled?: boolean }
+) => {
   return useInfiniteQuery<GetSavedResponse>({
     queryKey: userKeys.savedPosts(initialParams),
     queryFn: ({ pageParam = 1 }) =>
@@ -70,6 +71,7 @@ export const useInfiniteSavedPosts = (initialParams?: Partial<Pagination>) => {
       return allPages.length + 1;
     },
     initialPageParam: 1,
+    enabled: initialParams?.enabled ?? true,
   });
 };
 
@@ -103,7 +105,7 @@ export const useInfiniteLikedPostsByUsername = (
   params: GetPostsByUsernameParams
 ) => {
   return useInfiniteQuery<GetPostsByUsernameResponse>({
-    queryKey: userKeys.inifiniteUseranmePosts(params),
+    queryKey: userKeys.inifiniteUseranmeLikedPosts(params),
     initialPageParam: 1,
     queryFn: ({ pageParam = 1 }) => {
       return userService.getLikedPostByUsername({
