@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌟 WPH Social App
+# 🌟 Social App
 
 ### A Modern Social Media Platform Built with Next.js
 
@@ -17,7 +17,7 @@
 
 ## 📖 Overview
 
-WPH Social App is a feature-rich social media platform that enables users to share posts, interact with content, follow other users, and build their social network. Built with modern web technologies and best practices, it delivers a seamless and responsive user experience.
+Social App is a feature-rich social media platform that enables users to share posts, interact with content, follow other users, and build their social network. Built with modern web technologies and best practices, it delivers a seamless and responsive user experience.
 
 ## ✨ Features
 
