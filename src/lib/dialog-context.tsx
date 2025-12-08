@@ -13,6 +13,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { XIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { usePathname } from 'next/navigation';
 
 /**
  * Example Usage
@@ -70,6 +71,8 @@ export const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [state, setState] = React.useState<DialogState>({ isOpen: false });
+  const pathname = usePathname();
+  const prevPathnameRef = React.useRef(pathname);
 
   const openDialog = (options: Omit<DialogState, 'isOpen'>) => {
     setState({ ...options, isOpen: true });
@@ -90,6 +93,13 @@ export const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
       state.onOpenChange?.(true);
     }
   };
+
+  React.useEffect(() => {
+    if (prevPathnameRef.current !== pathname && state.isOpen) {
+      closeDialog();
+    }
+    prevPathnameRef.current = pathname;
+  }, [pathname, state.isOpen]);
 
   return (
     <DialogContext.Provider value={{ openDialog, closeDialog }}>

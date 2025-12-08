@@ -60,7 +60,7 @@ export const ModalCommentContent = ({ post }: Props) => {
 
       <div className='md:flex-2 md:space-y-4 relative'>
         <div className='hidden md:block space-y-2 md:space-y-4 px-8 py-4'>
-          <UserInfo>
+          <UserInfo username={post.author.username}>
             <UserInfoAvatar
               className='size-10'
               src={post.author.avatarUrl ?? ''}
@@ -94,7 +94,7 @@ export const ModalCommentContent = ({ post }: Props) => {
 
                 return (
                   <div className='space-y-2 md:space-y-4' key={comment.id}>
-                    <UserInfo>
+                    <UserInfo username={comment.author.username}>
                       <UserInfoAvatar
                         className='size-10'
                         src={comment.author.avatarUrl ?? ''}

@@ -18,7 +18,7 @@ export const UserFollowItem = ({ user, className }: UserFollowItemProps) => {
 
   return (
     <div className={cn('flex-between', className)}>
-      <UserInfo>
+      <UserInfo username={user.username}>
         <UserInfoAvatar className='size-12' src={avatarUrl ?? ''} alt={name} />
 
         <UserInfoContent>
