@@ -43,12 +43,13 @@ Social App is a feature-rich social media platform that enables users to share p
 - **Delete Posts** - Remove your own posts
 - **Optimistic UI Updates** - Instant feedback on user actions
 
-### 💬 Comments & Interactions
+### 💬 Comments, Like, & Interactions
 
 - **Comment System** - Engage in discussions on posts
 - **Real-time Updates** - Live comment count updates
 - **Nested Comments** - Reply to comments (if implemented)
 - **Comment Management** - Edit and delete your comments
+- **Like System** – Appreciate posts with a single tap and see total likes in real time
 
 ### 🔍 Search & Discovery
 
@@ -138,7 +139,7 @@ Social App is a feature-rich social media platform that enables users to share p
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/wph-social-app.git
+   git clone https://github.com/hanssav/wph-social-app
    cd wph-social-app
    ```
 
@@ -157,7 +158,7 @@ Social App is a feature-rich social media platform that enables users to share p
    Create a `.env.local` file in the root directory:
 
    ```env
-   NEXT_PUBLIC_API_URL=your_api_url_here
+   NEXT_PUBLIC_API_URL=https://social-media-be-400174736012.asia-southeast2.run.app/api
    ```
 
 4. **Run the development server**
@@ -222,7 +223,7 @@ npm start
   <img src="public/readme/rhf-validation.png" alt="React Hook Form Validation" width="70%">
 </div>
 
-### Find users
+### Other users
 
 <div align="center">
   <img src="public/readme/search-user.png" alt="Search user" width="45%">
@@ -231,7 +232,7 @@ npm start
   <img src="public/readme/others-user-followers.png" alt="Friends profile Followers" width="45%">
 </div>
 
-### Optimistic UI Updates
+### Optimistic UI Updates Example
 
 <div align="center">
   <img src="public/readme/optimistic-ui.gif" alt="Optimistic UI Demo" width="70%">
