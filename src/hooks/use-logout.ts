@@ -1,4 +1,5 @@
 'use client';
+import { PATH } from '@/constants';
 import { useAppDispatch } from '@/store/hooks';
 import { logout } from '@/store/slices/auth-slice';
 import { useQueryClient } from '@tanstack/react-query';
@@ -10,9 +11,9 @@ export const useLogout = () => {
   const queryClient = useQueryClient();
 
   const handleLogout = () => {
+    router.push(PATH.LOGIN);
     dispatch(logout());
     queryClient.clear();
-    router.push('/login');
   };
 
   return { logout: handleLogout };

@@ -5,7 +5,8 @@ export type FieldType =
   | 'textarea'
   | 'file'
   | 'number'
-  | 'select';
+  | 'select'
+  | 'tel';
 
 export type FormFieldType = {
   name: string;
@@ -13,6 +14,7 @@ export type FormFieldType = {
   type: FieldType;
   placeholder?: string;
   autoComplete?: string;
+  disabled?: boolean;
 
   options?: { label: string; value: number }[];
 };

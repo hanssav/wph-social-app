@@ -15,7 +15,7 @@ const AuthCCard = ({ children, title }: Props) => {
     <div className='w-full mx-6'>
       <Card
         className={cn(
-          'backdrop-blur-[100px] bg-black/30 border-neutral-900',
+          'bg-[#00000033] border-neutral-900',
           'py-8 md:py-10 space-y-4 md:space-y-6'
         )}
       >

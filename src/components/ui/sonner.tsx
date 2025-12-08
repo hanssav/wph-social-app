@@ -32,6 +32,12 @@ const Toaster = ({ ...props }: ToasterProps) => {
           '--border-radius': 'var(--radius)',
         } as React.CSSProperties
       }
+      toastOptions={{
+        classNames: {
+          success: 'sonner-success-toast',
+          error: 'sonner-error-toast',
+        },
+      }}
       {...props}
     />
   );

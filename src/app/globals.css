@@ -288,23 +288,23 @@
 
 /* ==================== UTILITY CLASSES ==================== */
 @utility flex-center {
-  @apply flex items-center justify-center;
+  @apply flex flex-row items-center justify-center;
 }
 
 @utility flex-between {
-  @apply flex items-center justify-between;
+  @apply flex flex-row items-center justify-between;
 }
 
 @utility flex-start {
-  @apply flex items-center justify-start;
+  @apply flex flex-row items-center justify-start;
 }
 
 @utility flex-end {
-  @apply flex items-center justify-end;
+  @apply flex flex-row items-center justify-end;
 }
 
 @utility flex-col-center {
-  @apply flex flex-col items-center justify-center;
+  @apply flex flex-col items-center w-full justify-center;
 }
 
 @utility flex-col-start {
@@ -323,7 +323,6 @@
   @apply py-4 md:py-10;
 }
 
-/* footer tabs */
 @utility container-360 {
   @apply max-w-[360px] mx-auto my-0 px-4;
 }
@@ -346,4 +345,19 @@
 
 @utility container-1200 {
   @apply max-w-[1200px] mx-auto my-0 px-4;
+}
+
+[data-sonner-toast][data-type='success'],
+.sonner-success-toast {
+  background-color: #079455 !important;
+  border-color: #079455 !important;
+  color: white !important;
+}
+
+/* Error Toast */
+[data-sonner-toast][data-type='error'],
+.sonner-error-toast {
+  background-color: #d9206e !important;
+  border-color: #d9206e !important;
+  color: white !important;
 }

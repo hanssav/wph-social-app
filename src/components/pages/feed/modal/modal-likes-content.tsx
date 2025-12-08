@@ -5,66 +5,19 @@ import {
   UserInfoContent,
   UserInfoTitle,
   UserInfoSubTitle,
-} from '../card/feed-card-user-info';
-import {
-  useFollowMutation,
-  useUnfollowMutation,
-  useGetLikesByPost,
-} from '@/hooks';
+} from '../../../container/user-info';
+import { useGetLikesByPost, useFollowAct } from '@/hooks';
 import { CircleCheck } from 'lucide-react';
-import { UserLike } from '@/types';
-import { useState } from 'react';
 
 type ModalLikesContentProps = {
   postId: number;
 };
 
 export const ModalLikesContent = ({ postId }: ModalLikesContentProps) => {
-  const followMutation = useFollowMutation();
-  const unfollowMutation = useUnfollowMutation();
   const { data, isLoading } = useGetLikesByPost(postId);
   const likes = data?.pages.flatMap((page) => page.data?.users ?? []) ?? [];
 
-  const [followStates, setFollowStates] = useState<Record<string, boolean>>({});
-
-  const handleFollowAct = (like: UserLike) => {
-    const currentState = followStates[like.username] ?? like.isFollowedByMe;
-
-    setFollowStates((prev) => ({
-      ...prev,
-      [like.username]: !currentState,
-    }));
-
-    if (currentState) {
-      unfollowMutation.mutate(
-        { username: like.username, postId },
-        {
-          onError: () => {
-            setFollowStates((prev) => ({
-              ...prev,
-              [like.username]: like.isFollowedByMe,
-            }));
-          },
-        }
-      );
-    } else {
-      followMutation.mutate(
-        { username: like.username, postId },
-        {
-          onError: () => {
-            setFollowStates((prev) => ({
-              ...prev,
-              [like.username]: like.isFollowedByMe,
-            }));
-          },
-        }
-      );
-    }
-  };
-
-  const getFollowState = (like: UserLike) => {
-    return followStates[like.username] ?? like.isFollowedByMe;
-  };
+  const { getFollowState, handleFollowAct } = useFollowAct(postId);
 
   if (isLoading) {
     return (

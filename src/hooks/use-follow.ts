@@ -1,6 +1,13 @@
 import { followService } from '@/services';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import {
+  useQueryClient,
+  useMutation,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 import { likeKeys } from './use-like';
+import { userKeys } from './use-profile-post';
+import { GetFollowParams, GetFollowResponse } from '@/types';
+import { userService } from '@/services/user.service';
 
 type FollowMutationContext = {
   username: string;
@@ -14,6 +21,11 @@ export const useFollowMutation = () => {
     mutationFn: ({ username }: FollowMutationContext) =>
       followService.add(username),
     onSuccess: (_data, { username, postId }) => {
+      const encodedUsername = encodeURIComponent(username);
+      queryClient.invalidateQueries({
+        queryKey: userKeys.getUserByUsername({ username: encodedUsername }),
+      });
+
       queryClient.invalidateQueries({ queryKey: ['feeds'] });
       queryClient.invalidateQueries({
         queryKey: ['user', username],
@@ -39,6 +51,11 @@ export const useUnfollowMutation = () => {
     mutationFn: ({ username }: FollowMutationContext) =>
       followService.remove(username),
     onSuccess: (_data, { username, postId }) => {
+      const encodedUsername = encodeURIComponent(username);
+      queryClient.invalidateQueries({
+        queryKey: userKeys.getUserByUsername({ username: encodedUsername }),
+      });
+
       queryClient.invalidateQueries({ queryKey: ['feeds'] });
       queryClient.invalidateQueries({
         queryKey: ['user', username],
@@ -54,5 +71,49 @@ export const useUnfollowMutation = () => {
         });
       }
     },
+  });
+};
+
+export const useFollowing = (params: GetFollowParams) => {
+  return useInfiniteQuery<GetFollowResponse>({
+    queryKey: ['following', 'users', params.username],
+    queryFn: ({ pageParam }) => {
+      return userService.getFollowing({
+        ...params,
+        page: Number(pageParam),
+        limit: params.limit ?? 20,
+      });
+    },
+    getNextPageParam: (lastPage) => {
+      const pagination = lastPage?.data?.pagination;
+      if (!pagination) return undefined;
+
+      const { page, totalPages } = pagination;
+      return page < totalPages ? page + 1 : undefined;
+    },
+    initialPageParam: 1,
+    enabled: !!params.username,
+  });
+};
+
+export const useFollowers = (params: GetFollowParams) => {
+  return useInfiniteQuery<GetFollowResponse>({
+    queryKey: ['followers', 'users', params.username],
+    queryFn: ({ pageParam }) => {
+      return userService.getFollowers({
+        ...params,
+        page: Number(pageParam),
+        limit: params.limit ?? 20,
+      });
+    },
+    getNextPageParam: (lastPage) => {
+      const pagination = lastPage?.data?.pagination;
+      if (!pagination) return undefined;
+
+      const { page, totalPages } = pagination;
+      return page < totalPages ? page + 1 : undefined;
+    },
+    initialPageParam: 1,
+    enabled: !!params.username,
   });
 };

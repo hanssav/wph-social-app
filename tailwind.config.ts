@@ -25,7 +25,7 @@ const customTextPlugin = plugin(function ({ addUtilities }) {
     extrabold: '--font-weight-extrabold',
   };
 
-  const utilities: Record<string, any> = {};
+  const utilities: Record<string, Record<string, string>> = {};
 
   for (const [sizeKey, sizeVar] of Object.entries(textSizes)) {
     for (const [weightKey, weightVar] of Object.entries(fontWeights)) {
@@ -49,6 +49,14 @@ export default {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'container-360',
+    'container-452',
+    'container-600',
+    'container-800',
+    'container-812',
+    'container-1200',
+  ],
   theme: {
     extend: {
       keyframes: {
@@ -68,4 +76,4 @@ export default {
     },
   },
   plugins: [customTextPlugin],
-} satisfies Config;
+} as Config;

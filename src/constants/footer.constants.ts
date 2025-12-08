@@ -1,4 +1,4 @@
-import { LucideIcon, House, Plus, User } from 'lucide-react';
+import { LucideIcon, House, Plus, User, LogOut } from 'lucide-react';
 import { PATH } from './path.constants';
 
 export type FooterTabsType = {
@@ -21,8 +21,8 @@ export const FOOTER_DATA: FooterTabsType[] = [
     icon: Plus,
     id: 'plus',
     type: 'add',
-    // label: 'Home',
-    // action: PATH.FEED,
+    label: 'Add Post',
+    action: PATH.FORM.ADD_POST,
   },
   {
     icon: User,
@@ -32,3 +32,11 @@ export const FOOTER_DATA: FooterTabsType[] = [
     action: PATH.PROFILE,
   },
 ];
+
+export const LOGOUT_MENU: FooterTabsType = {
+  icon: LogOut,
+  id: 'logout-menu',
+  type: 'item',
+  label: 'Logout',
+  action: 'logout',
+};

@@ -5,6 +5,11 @@ export const PATH = {
   PROFILE: '/profile',
   FRIEND: '/friend',
   SETTINGS: '/settings',
+  FORM: {
+    BASE: '/form',
+    ADD_POST: '/form/add-post',
+    UPDATE_PROFILE: '/form/update-profile',
+  },
 };
 
 export const protectedRoutes = [PATH.PROFILE, PATH.SETTINGS];

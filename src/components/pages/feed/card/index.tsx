@@ -1,20 +1,15 @@
-import { cn, getImage } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { Post } from '@/types';
-import { ComponentProps } from 'react';
-import { FeedCardImage } from './feed-card-image';
-import { FeedCardActions, FeedCardActionsItem } from './feed-card.-icons';
+import { ComponentProps, useMemo } from 'react';
 import { useDialog } from '@/lib/dialog-context';
-import {
-  UserInfo,
-  UserInfoAvatar,
-  UserInfoContent,
-  UserInfoSubTitle,
-  UserInfoTitle,
-} from './feed-card-user-info';
 import { useFeedActions } from '@/hooks';
-import { ExpandableText } from '@/components/container';
 import { ModalCommentContent } from '../modal/modal-comment-content';
 import { ModalLikesContent } from '../modal/modal-likes-content';
+import { FeedCardProvider } from './feed-card-context';
+import { FeedCardHeader } from './feed-card-header';
+import { FeedCardContent } from './feed-card-content';
+import { FeedCardActionsBar } from './feed-card-actions-bar';
+import { FeedCardCaption } from './feed-card-caption';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -43,7 +38,6 @@ export const FeedCardItem = ({ post }: FeedCardItemProps) => {
       openDialog({
         title: 'Likes',
         content: <ModalLikesContent postId={post.id} />,
-        // className: 'md:max-w-[1200px]',
       });
     },
     onShowComments: () => {
@@ -55,37 +49,21 @@ export const FeedCardItem = ({ post }: FeedCardItemProps) => {
     onShowShare: () => {},
   });
 
+  const providerValue = useMemo(
+    () => ({ post, iconActions, dayAgo }),
+    [post, iconActions, dayAgo]
+  );
+
   return (
-    <div className='space-y-2 md:space-y-3'>
+    <FeedCardProvider value={providerValue}>
       <div className='space-y-2 md:space-y-3'>
-        <UserInfo>
-          <UserInfoAvatar
-            src={post.author.avatarUrl ?? ''}
-            alt={post.author.name ?? 'user'}
-          />
-          <UserInfoContent>
-            <UserInfoTitle>{post.author.name}</UserInfoTitle>
-            <UserInfoSubTitle>{dayAgo}</UserInfoSubTitle>
-          </UserInfoContent>
-        </UserInfo>
-        <FeedCardImage
-          src={getImage(post.imageUrl)}
-          alt={post.caption ?? 'post image'}
-        />
+        <div className='space-y-2 md:space-y-3'>
+          <FeedCardHeader />
+          <FeedCardContent />
+        </div>
+        <FeedCardActionsBar />
+        <FeedCardCaption />
       </div>
-      <div className='flex-between'>
-        <FeedCardActions>
-          {iconActions.map(
-            (icon, idx) =>
-              idx < 3 && <FeedCardActionsItem data={icon} key={idx} />
-          )}
-        </FeedCardActions>
-        <FeedCardActionsItem data={iconActions[3]} />
-      </div>
-      <div className='md:space-y-1'>
-        <h3 className='text-sm-bold md:text-md-bold'>{post.author.name}</h3>
-        <ExpandableText text={post.caption ?? ''} />
-      </div>
-    </div>
+    </FeedCardProvider>
   );
 };

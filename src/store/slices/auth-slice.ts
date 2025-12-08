@@ -29,6 +29,19 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.isLoading = false;
     },
+    updateUser: (state, action: PayloadAction<Partial<MePayload>>) => {
+      if (state.user) {
+        state.user = {
+          ...state.user,
+          ...action.payload,
+          profile: {
+            ...state.user.profile,
+            ...action.payload.profile,
+          },
+          stats: action.payload.stats || state.user.stats,
+        };
+      }
+    },
     logout: (state) => {
       state.user = null;
       state.token = null;
@@ -51,7 +64,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setToken, setUser, logout, setLoading, hydrateToken } =
+export const { setToken, setUser, updateUser, logout, setLoading, hydrateToken } =
   authSlice.actions;
 
 const authReducer = authSlice.reducer;

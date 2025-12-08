@@ -1,6 +1,5 @@
-import { cn, getImage } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { User } from 'lucide-react';
 import { ComponentProps } from 'react';
 
 type UserAvatarProps = {
