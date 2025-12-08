@@ -40,7 +40,6 @@ Social App is a feature-rich social media platform that enables users to share p
 - **Feed Timeline** - Infinite scroll feed with latest posts
 - **Like Posts** - React to content with likes
 - **Save Posts** - Bookmark favorite posts
-- **Delete Posts** - Remove your own posts
 - **Optimistic UI Updates** - Instant feedback on user actions
 
 ### 💬 Comments, Like, & Interactions
@@ -48,7 +47,6 @@ Social App is a feature-rich social media platform that enables users to share p
 - **Comment System** - Engage in discussions on posts
 - **Real-time Updates** - Live comment count updates
 - **Nested Comments** - Reply to comments (if implemented)
-- **Comment Management** - Edit and delete your comments
 - **Like System** – Appreciate posts with a single tap and see total likes in real time
 
 ### 🔍 Search & Discovery
@@ -56,11 +54,11 @@ Social App is a feature-rich social media platform that enables users to share p
 - **User Search** - Find users by name or username
 - **Infinite Scroll** - Seamless content loading
 - **Search Suggestions** - Real-time search results
+- **Search Users** - Real-time search your friends
 
 ### 🎨 UI/UX Features
 
 - **Responsive Design** - Mobile-first approach
-- **Dark Mode** - Theme switching support
 - **Optimistic Updates** - Instant UI feedback
 - **Loading States** - Skeleton loaders and spinners
 - **Form Validation** - React Hook Form with Zod validation
