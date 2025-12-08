@@ -74,7 +74,7 @@ WPH Social App is a feature-rich social media platform that enables users to sha
 
 | Technology                                                                                               | Description                    | Version |
 | -------------------------------------------------------------------------------------------------------- | ------------------------------ | ------- |
-| ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)          | React framework with SSR & SSG | 16.0.6  |
+| ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)          | React framework with SSR & SSG | 16.0.7  |
 | ![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)                | UI library                     | 19.2.0  |
 | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white) | Type-safe JavaScript           | 5.0     |
 
