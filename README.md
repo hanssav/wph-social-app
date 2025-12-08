@@ -54,7 +54,6 @@ Social App is a feature-rich social media platform that enables users to share p
 - **User Search** - Find users by name or username
 - **Infinite Scroll** - Seamless content loading
 - **Search Suggestions** - Real-time search results
-- **Search Users** - Real-time search your friends
 
 ### 🎨 UI/UX Features
 
