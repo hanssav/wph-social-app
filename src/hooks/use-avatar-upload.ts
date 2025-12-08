@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import { FieldErrors, UseFormReturn } from 'react-hook-form';
 import { UpdateProfileRequest } from '@/schema/porfile.schema';
 import { toast } from 'sonner';
 
@@ -42,13 +42,13 @@ export const useAvatarUpload = ({
 
   const currentAvatarUrl = avatarPreview ?? initialAvatarUrl ?? '';
 
-  const handleAvatarError = (errors: any) => {
+  const handleAvatarError = (errors: FieldErrors<UpdateProfileRequest>) => {
     if (errors.avatar?.message) {
       toast.error(errors.avatar.message);
       return;
     }
 
-    const firstError = Object.values(errors)[0] as any;
+    const firstError = Object.values(errors)[0];
     if (firstError?.message) {
       toast.error(firstError.message);
     }

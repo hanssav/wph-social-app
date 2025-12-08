@@ -2,7 +2,7 @@
 import Spin from '@/components/ui/spin';
 import { authRoutes, PATH, protectedRoutes, publicRoutes } from '@/constants';
 import { useAuth } from '@/hooks/use-auth';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppDispatch } from '@/store/hooks';
 import { hydrateToken } from '@/store/slices/auth-slice';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -19,6 +19,7 @@ export default function AuthProvider({
 
   useEffect(() => {
     dispatch(hydrateToken());
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsHydrated(true);
   }, [dispatch]);
 

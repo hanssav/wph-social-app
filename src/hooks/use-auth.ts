@@ -2,12 +2,13 @@ import { meServices } from '@/services';
 import { RootState } from '@/store';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { logout, setLoading, setUser } from '@/store/slices/auth-slice';
+import { Pagination } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
 export const meKeys = {
   me: ['auth', 'me'] as const,
-  posts: (params?: any) => ['me', 'posts', params] as const,
+  posts: (params?: Partial<Pagination>) => ['me', 'posts', params] as const,
 };
 
 export const useAuth = () => {

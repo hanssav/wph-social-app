@@ -7,7 +7,6 @@ import {
   SearchUserParams,
   SearchUserResponse,
 } from '@/types';
-import { is } from 'zod/v4/locales';
 
 export const userService = {
   search: async (params: SearchUserParams) => {

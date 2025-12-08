@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { Post } from '@/types';
-import { ComponentProps } from 'react';
+import { ComponentProps, useMemo } from 'react';
 import { useDialog } from '@/lib/dialog-context';
 import { useFeedActions } from '@/hooks';
 import { ModalCommentContent } from '../modal/modal-comment-content';
@@ -49,8 +49,13 @@ export const FeedCardItem = ({ post }: FeedCardItemProps) => {
     onShowShare: () => {},
   });
 
+  const providerValue = useMemo(
+    () => ({ post, iconActions, dayAgo }),
+    [post, iconActions, dayAgo]
+  );
+
   return (
-    <FeedCardProvider value={{ post, iconActions, dayAgo }}>
+    <FeedCardProvider value={providerValue}>
       <div className='space-y-2 md:space-y-3'>
         <div className='space-y-2 md:space-y-3'>
           <FeedCardHeader />

@@ -9,6 +9,7 @@ import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store';
 
 import { motion } from 'motion/react';
+import Image from 'next/image';
 
 const FeedPage = () => {
   const { post, isLoading: isPostLoading } = useAppSelector(
@@ -38,11 +39,12 @@ const FeedPage = () => {
           <div className='bg-neutral-950 rounded-lg border border-neutral-900 p-4'>
             <div className='flex items-center gap-3'>
               {post.imageUrl && (
-                <div className='size-16 rounded overflow-hidden flex-shrink-0 bg-neutral-950'>
-                  <img
+                <div className='size-16 relative rounded overflow-hidden flex-shrink-0 bg-neutral-950'>
+                  <Image
                     src={post.imageUrl}
                     alt='Preview'
-                    className='w-full h-full object-cover opacity-70'
+                    fill
+                    className='object-cover opacity-70'
                   />
                 </div>
               )}
@@ -77,7 +79,7 @@ const FeedPage = () => {
               {(isFetchingNextPage || isLoading) && <Spin />}
               {!hasNextPage && feeds.length > 0 && (
                 <p className='text-neutral-600 text-sm'>
-                  You're all caught up!
+                  You&apos;re all caught up!
                 </p>
               )}
             </div>

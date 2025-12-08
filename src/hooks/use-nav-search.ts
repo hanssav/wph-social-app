@@ -3,13 +3,11 @@ import { useSearchUsers } from './use-search-users';
 import type { User } from '@/types';
 
 type UseNavSearchProps = {
-  isSearchOpen: boolean;
   setIsSearchOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   onSelectUser?: (user: User) => void;
 };
 
 export const useNavSearch = ({
-  isSearchOpen,
   setIsSearchOpen,
   onSelectUser,
 }: UseNavSearchProps) => {

@@ -1,10 +1,5 @@
 import { apiInstance } from '@/api';
-import {
-  AddLikeApiResponse,
-  LikesPostApiResponse,
-  LikeListPostParams,
-} from '@/types/like.types';
-import { id } from 'zod/v4/locales';
+import { AddLikeApiResponse, LikesPostApiResponse } from '@/types/like.types';
 
 export const likeService = {
   getByPostId: async (params: {

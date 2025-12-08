@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { Input } from '../ui/input';
 import { ArrowUpToLine, Trash2, UploadCloud } from 'lucide-react';
@@ -22,17 +22,13 @@ export function Dropzone({
   setFile,
 }: DropzoneProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
 
-  useEffect(() => {
+  const preview = useMemo(() => {
     if (file) {
       const objectUrl = URL.createObjectURL(file);
-      setPreview(objectUrl);
-
-      return () => URL.revokeObjectURL(objectUrl);
-    } else {
-      setPreview(null);
+      return objectUrl;
     }
+    return null;
   }, [file]);
 
   const handleFile = (selectedFile: File | null) => {
@@ -49,7 +45,6 @@ export function Dropzone({
     }
 
     setFile(null);
-    setPreview(null);
     onChange(null);
 
     if (inputRef.current) {

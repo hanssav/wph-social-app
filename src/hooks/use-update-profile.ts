@@ -16,7 +16,12 @@ export const useUpdateProfile = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  return useMutation({
+  return useMutation<
+    MeResponse,
+    unknown,
+    UpdateProfileRequest,
+    { previousData?: MeResponse }
+  >({
     mutationFn: meServices.updateProfile,
 
     onMutate: async (newProfile: UpdateProfileRequest) => {
@@ -52,9 +57,10 @@ export const useUpdateProfile = () => {
     },
 
     onSuccess: async (data) => {
-      const userData = data.data as any;
+      const userData = data.data;
 
       let mePayload;
+
       if (userData.profile && userData.stats) {
         mePayload = userData;
       } else {
@@ -67,7 +73,7 @@ export const useUpdateProfile = () => {
         };
 
         mePayload = {
-          profile: userData,
+          profile: userData as unknown as UserProfile,
           stats: currentStats,
         };
       }

@@ -19,7 +19,8 @@ export const FormFields = <T extends FieldValues>({
   control,
   config,
 }: Props<T>) => {
-  const { type, placeholder, autoComplete, options, disabled } = config;
+  // add options params if needed selects
+  const { type, placeholder, autoComplete, disabled } = config;
 
   return (
     <FormField

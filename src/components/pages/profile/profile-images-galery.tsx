@@ -14,6 +14,7 @@ export const ProfileImagesItem = ({ className, ...props }: ImageProps) => {
       <Image
         {...props}
         loading='eager'
+        alt={props.alt}
         fill
         className={cn('object-cover', className)}
         sizes='(max-width: 768px) 33vw, 33vw'

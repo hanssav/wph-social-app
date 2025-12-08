@@ -25,7 +25,7 @@ const customTextPlugin = plugin(function ({ addUtilities }) {
     extrabold: '--font-weight-extrabold',
   };
 
-  const utilities: Record<string, any> = {};
+  const utilities: Record<string, Record<string, string>> = {};
 
   for (const [sizeKey, sizeVar] of Object.entries(textSizes)) {
     for (const [weightKey, weightVar] of Object.entries(fontWeights)) {

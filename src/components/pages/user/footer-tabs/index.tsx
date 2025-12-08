@@ -1,10 +1,9 @@
 import { FOOTER_DATA } from '@/constants/footer.constants';
 import { TabContainerItem, TabsContainer } from './tabs-container';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const FooterTabs = () => {
   const router = useRouter();
-  const pathname = usePathname();
 
   const handleClick = (action?: string) => {
     if (action) router.push(action);

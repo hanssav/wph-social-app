@@ -52,7 +52,6 @@ export const NavSearchBar: React.FC<NavSearchBarProps> = ({
     onClear,
     onSelect,
   } = useNavSearch({
-    isSearchOpen,
     setIsSearchOpen,
     onSelectUser,
   });

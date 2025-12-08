@@ -1,5 +1,5 @@
 import React from 'react';
-import { Control, FieldErrors } from 'react-hook-form';
+import { Control, FieldErrors, UseFormReturn } from 'react-hook-form';
 import { FormFields } from '@/components/container';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -7,7 +7,7 @@ import { profileFormFields } from '@/constants/profile.constants';
 import { UpdateProfileRequest } from '@/schema/porfile.schema';
 
 interface ProfileFormSectionProps {
-  form: any;
+  form: UseFormReturn<UpdateProfileRequest>;
   control: Control<UpdateProfileRequest>;
   onSubmit: (data: UpdateProfileRequest) => void;
   isSubmitting: boolean;

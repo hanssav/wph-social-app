@@ -26,6 +26,7 @@ import {
 type Props = {
   post: Post;
 };
+
 export const ModalCommentContent = ({ post }: Props) => {
   const {
     commentText,

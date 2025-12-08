@@ -1,4 +1,3 @@
-import { feedKeys } from '@/hooks';
 import { commentService } from '@/services';
 import { CommentListResponse, Post } from '@/types';
 import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query';
