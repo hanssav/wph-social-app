@@ -118,7 +118,7 @@ const Profile = () => {
             'md:flex-row md:flex-between md:gap-4'
           )}
         >
-          <UserInfo>
+          <UserInfo username={username}>
             <UserInfoAvatar
               className='size-16'
               src={profile?.avatarUrl ?? ''}

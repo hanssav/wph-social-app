@@ -40,7 +40,7 @@ export const ModalLikesContent = ({ postId }: ModalLikesContentProps) => {
 
         return (
           <div className='flex-between' key={like.id}>
-            <UserInfo>
+            <UserInfo username={like.username}>
               <UserInfoAvatar
                 className='size-12'
                 src={like.avatarUrl ?? ''}

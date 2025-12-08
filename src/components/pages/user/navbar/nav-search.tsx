@@ -58,23 +58,6 @@ export const NavSearchBar: React.FC<NavSearchBarProps> = ({
 
   if (!isLoggedIn && !isSearchOpen) return null;
 
-  const handleHoverAvatar = async (username: string) => {
-    await queryClient.prefetchQuery({
-      queryKey: userKeys.getUserByUsername({ username }),
-      queryFn: () => userService.getUser({ username }),
-    });
-
-    await queryClient.prefetchInfiniteQuery({
-      queryKey: userKeys.inifiniteUseranmePosts({ username }),
-      initialPageParam: 1,
-      queryFn: () => userService.getPostByUsername({ username }),
-    });
-  };
-
-  const handleClickAvatar = (username: string) => {
-    router.push(`${PATH.PROFILE}/${username}`);
-  };
-
   return (
     <div
       className={cn(
@@ -158,11 +141,7 @@ export const NavSearchBar: React.FC<NavSearchBarProps> = ({
                     onClick={() => onSelect(user)}
                     className='cursor-pointer hover:bg-accent rounded-md p-2 transition-colors'
                   >
-                    <UserInfo
-                      className='w-full'
-                      onClick={() => handleClickAvatar(user.username)}
-                      onMouseEnter={() => handleHoverAvatar(user.username)}
-                    >
+                    <UserInfo className='w-full' username={user.username}>
                       <UserInfoAvatar
                         src={user.avatarUrl ?? ''}
                         alt={user.name}

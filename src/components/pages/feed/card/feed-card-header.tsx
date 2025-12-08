@@ -11,7 +11,7 @@ export const FeedCardHeader = () => {
   const { post, dayAgo } = useFeedCardContext();
 
   return (
-    <UserInfo>
+    <UserInfo username={post.author.username}>
       <UserInfoAvatar
         src={post.author.avatarUrl ?? ''}
         alt={post.author.name ?? 'user'}
