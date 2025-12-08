@@ -14,3 +14,5 @@ export * from './use-update-profile';
 export * from './use-avatar-upload';
 export * from './use-update-profile-form';
 export * from './use-follow-act';
+export * from './use-profile-data';
+export * from './use-profile-posts';

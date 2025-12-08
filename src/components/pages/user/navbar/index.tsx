@@ -83,10 +83,10 @@ const Navbar = () => {
                       key={item.id}
                       onClick={() => handleClick(item.action)}
                       className={cn(
-                        'flex items-center gap-3 cursor-pointer px-4 py-3 hover:!bg-neutral-900',
-                        isActive && 'bg-neutral-900',
+                        'flex items-center gap-3 cursor-pointer px-4 py-3 hover:!bg-primary-300/50',
+                        isActive && 'bg-primary-300/50',
                         item.action === 'logout' &&
-                          'text-rose-600 hover:text-rose-700 hover:bg-rose-50 focus:text-rose-700 focus:bg-rose-100 dark:text-rose-400 dark:hover:text-rose-300 dark:hover:bg-rose-950/30 dark:focus:text-rose-300 dark:focus:bg-rose-950/40 '
+                          'text-rose-600 hover:!bg-primary-300/50 focus:text-rose-700 focus:bg-rose-100 dark:text-rose-400 dark:hover:text-rose-300dark:focus:text-rose-300 dark:focus:bg-rose-950/40 '
                       )}
                     >
                       <item.icon

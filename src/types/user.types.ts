@@ -56,3 +56,22 @@ export type GetPostsByUsernameResponse = ApiResponse<{
   posts: Post[];
   pagination: Pagination;
 }>;
+
+// ====================================================================
+// GET FOLLOWERS | GET FOLLOWING BY USERNAME
+// ====================================================================
+
+export type GetFollowParams = Partial<Pick<Pagination, 'page' | 'limit'>> & {
+  username: string;
+};
+
+export type GetFollowResponse = ApiResponse<{
+  users: { isFollowedByMe: boolean } & Pick<
+    User,
+    'id' | 'name' | 'avatarUrl' | 'username'
+  >[];
+  pagination: Pagination;
+}>;
+
+type FollowData = NonNullable<GetFollowResponse['data']>;
+export type FollowUser = FollowData['users'][number];

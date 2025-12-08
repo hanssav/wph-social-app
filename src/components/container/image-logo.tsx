@@ -6,7 +6,10 @@ import { ComponentProps } from 'react';
 export const ImageLogo = ({ className, ...props }: ComponentProps<'div'>) => {
   return (
     <div
-      className={cn('relative overflow-hidden w-[137px] h-9', className)}
+      className={cn(
+        'relative overflow-hidden w-[137px] h-9 cursor-pointer',
+        className
+      )}
       {...props}
     >
       <Image

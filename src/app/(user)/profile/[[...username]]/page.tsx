@@ -1,4 +1,5 @@
 'use client';
+import * as React from 'react';
 import {
   UserInfo,
   UserInfoAvatar,
@@ -8,8 +9,6 @@ import {
 } from '@/components/container/user-info';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { RootState } from '@/store';
-import { useAppSelector } from '@/store/hooks';
 import {
   Bookmark,
   CircleCheck,
@@ -28,172 +27,78 @@ import {
   ProfileTabsTrigger,
 } from '@/components/pages/profile/profile-tabs';
 import {
-  useGetUserByUsername,
-  useInfiniteLikedPostsByUsername,
-  useInfiniteMePosts,
-  useInfinitePostsByUsername,
-  useInfiniteSavedPosts,
-} from '@/hooks/use-profile-post';
-import {
   ProfileImages,
   ProfileImagesItem,
 } from '@/components/pages/profile/profile-images-galery';
 import { ProfileEmptyPost } from '@/components/pages/profile/profile-empty-post';
-import {
-  EMPTY_OTHERS_POST,
-  EMPTY_POST_STATE,
-  EMPTY_SAVED_STATE,
-} from '@/constants/profile.constants';
-import { useParams, useRouter } from 'next/navigation';
 import { PATH } from '@/constants';
-import { useFollowAct } from '@/hooks';
-import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
+import { ProfileActions, useProfileData, useProfilePosts } from '@/hooks';
+import { useDialog } from '@/lib/dialog-context';
+import { useParams } from 'next/navigation';
+import { ProfilieModalFollowContent } from '@/components/pages/profile/profile-modal-follow';
 
 const Profile = () => {
-  const router = useRouter();
   const params = useParams();
   const username = params.username?.[0] ?? '';
   const isOwnProfile = !username;
+  const { openDialog } = useDialog();
 
-  // =============================
-  // NOTE: INTERSECTION OBSERVER
-  // =============================
-  const { ref: postsRef, inView: postsInView } = useInView({
-    threshold: 0.1, // Trigger 10% height
-    triggerOnce: false,
-  });
+  const dialogHandlerRef = React.useRef<
+    (key: 'followers' | 'following') => void
+  >(() => {});
 
-  const { ref: savedRef, inView: savedInView } = useInView({
-    threshold: 0.1,
-    triggerOnce: false,
-  });
+  const profileActions: ProfileActions = {
+    onFollowers: () => dialogHandlerRef.current?.('followers'),
+    onFollowing: () => dialogHandlerRef.current?.('following'),
+  };
 
-  // =============================
-  // NOTE: USER PROFILE
-  // =============================
-  const { user, isLoading } = useAppSelector((state: RootState) => state.auth);
-  const { profile: profileMe, stats: profileStats } = user ?? {};
-
-  const { data: profileUsername } = useGetUserByUsername({
-    username,
-  });
-  const othersProfile = profileUsername?.data;
-  const othersStats = othersProfile?.counts;
-
-  // =============================
-  // NOTE: USER POSTS BY USERNAME (WITH INFINITE SCROLL)
-  // =============================
   const {
-    data: usernamePostsDatas,
-    fetchNextPage: fetchNextUsernamePost,
-    hasNextPage: hasNextUsernamePost,
-    isFetchingNextPage: isFetchingNextUsernamePost,
-  } = useInfinitePostsByUsername({ username, limit: 12 });
+    profile,
+    statsEntries,
+    isLoading,
+    othersProfile,
+    isFollowed,
+    handleFollowAct,
+    router,
+  } = useProfileData(profileActions, {
+    isOwnProfile,
+    username: username,
+  });
 
-  const postsUsername = usernamePostsDatas?.pages.flatMap(
-    (page) => page.data?.posts
+  const actualUsername = React.useMemo(() => {
+    return username || profile?.username || '';
+  }, [username, profile?.username]);
+
+  const handleOpenDialog = React.useCallback(
+    (key: 'followers' | 'following') => {
+      openDialog({
+        content: (
+          <ProfilieModalFollowContent
+            username={actualUsername}
+            defaultTab={key}
+          />
+        ),
+        className: 'max-w-md',
+      });
+    },
+    [actualUsername, openDialog]
   );
 
+  dialogHandlerRef.current = handleOpenDialog;
+
   const {
-    data: usernameLikedPostsDatas,
-    fetchNextPage: fetchNextUsernameLiked,
-    hasNextPage: hasNextUsernameLiked,
-    isFetchingNextPage: isFetchingNextUsernameLiked,
-  } = useInfiniteLikedPostsByUsername({
-    username,
-    limit: 12,
+    posts,
+    saved,
+    postFallback,
+    savedFallback,
+    isFetchingGallery,
+    isFetchingSaved,
+    postsRef,
+    savedRef,
+  } = useProfilePosts({
+    username: profile?.username ?? '',
+    isOwnProfile,
   });
-
-  const likedPostsByUsername = usernameLikedPostsDatas?.pages.flatMap(
-    (page) => page.data?.posts
-  );
-
-  // =================================
-  // NOTE: OWN PROFILE POSTS (WITH INFINITE SCROLL)
-  // =================================
-  const {
-    data: postsMeDatas,
-    fetchNextPage: fetchNextPosts,
-    hasNextPage: hasNextPosts,
-    isFetchingNextPage: isFetchingNextPosts,
-  } = useInfiniteMePosts({ limit: 12 });
-
-  const postsMe = postsMeDatas?.pages.flatMap((page) => page.data?.items);
-
-  const {
-    data: savedMeDatas,
-    fetchNextPage: fetchNextSaved,
-    hasNextPage: hasNextSaved,
-    isFetchingNextPage: isFetchingNextSaved,
-  } = useInfiniteSavedPosts({ limit: 12, enabled: isOwnProfile });
-
-  const savedMe = savedMeDatas?.pages.flatMap((page) => page.data?.posts);
-
-  // =================================
-  // NOTE: RESULTS
-  // =================================
-  const profile = isOwnProfile ? profileMe : othersProfile;
-  const posts = isOwnProfile ? postsMe : postsUsername;
-  const saved = isOwnProfile ? savedMe : likedPostsByUsername;
-  const stats = isOwnProfile ? profileStats : othersStats;
-  const postFallback = isOwnProfile ? EMPTY_POST_STATE : EMPTY_OTHERS_POST;
-  const savedFallback = isOwnProfile ? EMPTY_SAVED_STATE : EMPTY_OTHERS_POST;
-
-  // =================================
-  // NOTE: AUTO FETCH WHEN IN VIEW
-  // =================================
-
-  // Auto fetch posts when postsRef is in view
-  useEffect(() => {
-    if (postsInView) {
-      if (isOwnProfile) {
-        if (hasNextPosts && !isFetchingNextPosts) {
-          fetchNextPosts();
-        }
-      } else {
-        if (hasNextUsernamePost && !isFetchingNextUsernamePost) {
-          fetchNextUsernamePost();
-        }
-      }
-    }
-  }, [
-    postsInView,
-    isOwnProfile,
-    hasNextPosts,
-    isFetchingNextPosts,
-    fetchNextPosts,
-    hasNextUsernamePost,
-    isFetchingNextUsernamePost,
-    fetchNextUsernamePost,
-  ]);
-
-  // Auto fetch saved/liked when savedRef is in view
-  useEffect(() => {
-    if (!savedInView) return;
-
-    if (isOwnProfile) {
-      if (hasNextSaved && !isFetchingNextSaved && fetchNextSaved) {
-        fetchNextSaved();
-      }
-    } else {
-      if (hasNextUsernameLiked && !isFetchingNextUsernameLiked) {
-        fetchNextUsernameLiked();
-      }
-    }
-  }, [
-    savedInView,
-    isOwnProfile,
-    hasNextSaved,
-    isFetchingNextSaved,
-    fetchNextSaved,
-    hasNextUsernameLiked,
-    isFetchingNextUsernameLiked,
-    fetchNextUsernameLiked,
-  ]);
-
-  const { handleFollowAct, getFollowState } = useFollowAct();
-  const isFollowed = getFollowState(othersProfile);
 
   if (isLoading) {
     return (
@@ -202,13 +107,6 @@ const Profile = () => {
       </div>
     );
   }
-
-  const isFetchingGallery = isOwnProfile
-    ? isFetchingNextPosts
-    : isFetchingNextUsernamePost;
-  const isFetchingSaved = isOwnProfile
-    ? isFetchingNextSaved
-    : isFetchingNextUsernameLiked;
 
   return (
     <div className='container-812 space-y-4'>
@@ -266,8 +164,13 @@ const Profile = () => {
         </p>
 
         <ProfileStats>
-          {Object.entries(stats ?? {}).map(([key, value]) => (
-            <ProfileStatsItem key={key} k={key} value={value} />
+          {statsEntries.map((item) => (
+            <ProfileStatsItem
+              key={item.key}
+              k={item.key}
+              value={item.value}
+              onClick={item.onClick}
+            />
           ))}
         </ProfileStats>
       </section>

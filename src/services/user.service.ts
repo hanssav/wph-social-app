@@ -1,5 +1,7 @@
 import { apiInstance } from '@/api';
 import {
+  GetFollowParams,
+  GetFollowResponse,
   GetPostsByUsernameParams,
   GetPostsByUsernameResponse,
   GetUsernameParams,
@@ -44,6 +46,28 @@ export const userService = {
     const { data } = await apiInstance.get(`/users/${params.username}/likes`, {
       params,
     });
+
+    return data;
+  },
+
+  getFollowers: async (
+    params?: GetFollowParams
+  ): Promise<GetFollowResponse> => {
+    const { data } = await apiInstance.get(
+      `/users/${params?.username}/followers`,
+      { params }
+    );
+
+    return data;
+  },
+
+  getFollowing: async (
+    params?: GetFollowParams
+  ): Promise<GetFollowResponse> => {
+    const { data } = await apiInstance.get(
+      `/users/${params?.username}/following`,
+      { params }
+    );
 
     return data;
   },

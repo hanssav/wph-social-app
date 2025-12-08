@@ -36,7 +36,7 @@ const TabContainerItem = ({
     <div
       onClick={onClick}
       className={cn(
-        'space-y-1 flex-col-center',
+        'space-y-1 flex-col-center cursor-pointer',
         isAdd &&
           'p-2 size-11 md:12 bg-primary-200 aspect-square rounded-full flex-center',
         className
